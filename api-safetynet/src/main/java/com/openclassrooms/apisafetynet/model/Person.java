@@ -1,11 +1,17 @@
 package com.openclassrooms.apisafetynet.model;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -14,9 +20,6 @@ import lombok.Data;
 @Table(name = "persons")
 public class Person {
 	
-	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
 	
 	@Column(name="first_name")
     private String firstName;
@@ -37,6 +40,13 @@ public class Person {
 	private String phone;
 	
 	private String email;
+	
+	@JsonFormat(pattern="dd/MM/yyyy")
+	private Date birthdate;
+	
+	private ArrayList<Medication> medications;
+	
+	private ArrayList<Allergie> allergies;
 
 	
 }
