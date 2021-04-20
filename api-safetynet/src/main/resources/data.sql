@@ -1,46 +1,28 @@
-CREATE TABLE persons (
- id INT AUTO_INCREMENT  PRIMARY KEY,
- first_name VARCHAR(250) NOT NULL,
- last_name VARCHAR(250) NOT NULL,
- id_db VARCHAR(250) NOT NULL,
- address VARCHAR(250) NOT NULL,
- city VARCHAR(250) NOT NULL,
- zip INT NOT NULL,
- phone VARCHAR(250) NOT NULL,
- email VARCHAR(250) NOT NULL
-);
-
-INSERT INTO persons (first_name, last_name, id_db, address, city, zip, phone, email) VALUES
-		("John", "Boyd", "John_Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com") ,
-        ("Jacob", "Boyd", "Jacob_Boyd","1509 Culver St", "Culver", "97451", "841-874-6513", "drk@email.com" ),
-        ("Tenley", "Boyd","Tenley_Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "tenz@email.com") ,
-        ("Roger", "Boyd","Roger_Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com") ,
-        ("Felicia", "Boyd","Felicia_Boyd", "1509 Culver St", "Culver", "97451", "841-874-6544", "jaboyd@email.com") ,
-        ("Jonanathan", "Marrack","Jonanathan_Marrack", "29 15th St", "Culver", "97451", "841-874-6513", "drk@email.com" ),
-        ("Tessa", "Carman","Tessa_Carman", "834 Binoc Ave", "Culver", "97451", "841-874-6512", "tenz@email.com" ),
-        ("Peter", "Duncan","Peter_Duncan", "644 Gershwin Cir", "Culver", "97451", "841-874-6512", "jaboyd@email.com") ,
-        ("Foster", "Shepard", "Foster_Shepard","748 Townings Dr", "Culver", "97451", "841-874-6544", "jaboyd@email.com") ,
-        ("Tony", "Cooper","Tony_Cooper", "112 Steppes Pl", "Culver", "97451", "841-874-6874", "tcoop@ymail.com") ,
-        ("Lily", "Cooper","Lily_Cooper", "489 Manchester St", "Culver", "97451", "841-874-9845", "lily@email.com") ,
-        ("Sophia", "Zemicks","Sophia_Zemicks", "892 Downing Ct", "Culver", "97451", "841-874-7878", "soph@email.com" ),
-        ("Warren", "Zemicks","Warren_Zemicks", "892 Downing Ct", "Culver", "97451", "841-874-7512", "ward@email.com" ),
-        ("Zach", "Zemicks","Zach_Zemicks", "892 Downing Ct", "Culver", "97451", "841-874-7512", "zarc@email.com" ),
-        ("Reginold", "Walker", "Reginold_Walker","908 73rd St", "Culver", "97451", "841-874-8547", "reg@email.com" ),
-        ("Jamie", "Peters","Jamie_Peters", "908 73rd St", "Culver", "97451", "841-874-7462", "jpeter@email.com" ),
-        ("Ron", "Peters","Ron_Peters", "112 Steppes Pl", "Culver", "97451", "841-874-8888", "jpeter@email.com") ,
-        ("Allison", "Boyd","Allison_Boyd", "112 Steppes Pl", "Culver", "97451", "841-874-9888", "aly@imail.com" ),
-        ("Brian", "Stelzer", "Brian_Stelzer","947 E. Rose Dr", "Culver", "97451", "841-874-7784", "bstel@email.com") ,
-        ("Shawna", "Stelzer","Shawna_Stelzer", "947 E. Rose Dr", "Culver", "97451", "841-874-7784", "ssanw@email.com" ),
-        ("Kendrik", "Stelzer","Kendrick_Stelzer", "947 E. Rose Dr", "Culver", "97451", "841-874-7784", "bstel@email.com" ),
-        ("Clive", "Ferguson","Clive_Ferguson", "748 Townings Dr", "Culver", "97451", "841-874-6741", "clivfd@ymail.com" ),
-        ("Eric", "Cadigan", "Eric_Cadigan","951 LoneTree Rd", "Culver", "97451", "841-874-7458", "gramps@email.com" );
+INSERT INTO persons (first_name, last_name, id_db, birthdate, address, city, zip, phone, email) VALUES
+		("John", "Boyd", "John_Boyd","03/06/1984", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com") ,
+        ("Jacob", "Boyd", "Jacob_Boyd","03/06/1989","1509 Culver St", "Culver", "97451", "841-874-6513", "drk@email.com" ),
+        ("Tenley", "Boyd","Tenley_Boyd","02/18/2012", "1509 Culver St", "Culver", "97451", "841-874-6512", "tenz@email.com") ,
+        ("Roger", "Boyd","Roger_Boyd","09/06/2017" , "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com") ,
+        ("Felicia", "Boyd","Felicia_Boyd","01/08/1986", "1509 Culver St", "Culver", "97451", "841-874-6544", "jaboyd@email.com") ,
+        ("Jonanathan", "Marrack","Jonanathan_Marrack","01/03/1989", "29 15th St", "Culver", "97451", "841-874-6513", "drk@email.com" ),
+        ("Tessa", "Carman","Tessa_Carman","02/18/2012" , "834 Binoc Ave", "Culver", "97451", "841-874-6512", "tenz@email.com" ),
+        ("Peter", "Duncan","Peter_Duncan","09/06/2000", "644 Gershwin Cir", "Culver", "97451", "841-874-6512", "jaboyd@email.com") ,
+        ("Foster", "Shepard", "Foster_Shepard", "01/08/1980","748 Townings Dr", "Culver", "97451", "841-874-6544", "jaboyd@email.com") ,
+        ("Tony", "Cooper","Tony_Cooper","03/06/1994", "112 Steppes Pl", "Culver", "97451", "841-874-6874", "tcoop@ymail.com") ,
+        ("Lily", "Cooper","Lily_Cooper","03/06/1994", "489 Manchester St", "Culver", "97451", "841-874-9845", "lily@email.com") ,
+        ("Sophia", "Zemicks","Sophia_Zemicks","03/06/1988",  "892 Downing Ct", "Culver", "97451", "841-874-7878", "soph@email.com" ),
+        ("Warren", "Zemicks","Warren_Zemicks","03/06/1985", "892 Downing Ct", "Culver", "97451", "841-874-7512", "ward@email.com" ),
+        ("Zach", "Zemicks","Zach_Zemicks","03/06/2017", "892 Downing Ct", "Culver", "97451", "841-874-7512", "zarc@email.com" ),
+        ("Reginold", "Walker", "Reginold_Walker","08/30/1979","908 73rd St", "Culver", "97451", "841-874-8547", "reg@email.com" ),
+        ("Jamie", "Peters","Jamie_Peters","03/06/1982" , "908 73rd St", "Culver", "97451", "841-874-7462", "jpeter@email.com" ),
+        ("Ron", "Peters","Ron_Peters", "04/06/1965","112 Steppes Pl", "Culver", "97451", "841-874-8888", "jpeter@email.com") ,
+        ("Allison", "Boyd","Allison_Boyd", "03/15/1965","112 Steppes Pl", "Culver", "97451", "841-874-9888", "aly@imail.com" ),
+        ("Brian", "Stelzer", "Brian_Stelzer","12/06/1975","947 E. Rose Dr", "Culver", "97451", "841-874-7784", "bstel@email.com") ,
+        ("Shawna", "Stelzer","Shawna_Stelzer","07/08/1980", "947 E. Rose Dr", "Culver", "97451", "841-874-7784", "ssanw@email.com" ),
+        ("Kendrik", "Stelzer","Kendrick_Stelzer","03/06/2014", "947 E. Rose Dr", "Culver", "97451", "841-874-7784", "bstel@email.com" ),
+        ("Clive", "Ferguson","Clive_Ferguson", "03/06/1994","748 Townings Dr", "Culver", "97451", "841-874-6741", "clivfd@ymail.com" ),
+        ("Eric", "Cadigan", "Eric_Cadigan","08/06/1945","951 LoneTree Rd", "Culver", "97451", "841-874-7458", "gramps@email.com" );
         
-        CREATE TABLE firestations (
- id INT AUTO_INCREMENT  PRIMARY KEY,
- address VARCHAR(250) NOT NULL,
- station INT NOT NULL,
-
-);
 
 INSERT INTO firestations (address, station) VALUES
 		( "1509 Culver St", "3" ),
@@ -57,18 +39,9 @@ INSERT INTO firestations (address, station) VALUES
         ( "748 Townings Dr", "3" ),
         ( "951 LoneTree Rd", "2" );
         
-CREATE TABLE medicalrecords(
- id INT AUTO_INCREMENT  PRIMARY KEY,
- first_name VARCHAR(250) NOT NULL,
- last_name VARCHAR(250) NOT NULL,
- id_db VARCHAR(250) NOT NULL,
- birth_date DATE NOT NULL,
- medications VARCHAR(250),
- allergies VARCHAR(250),
- );
+
 INSERT INTO medicalrecords (first_name, last_name, id_db, birth_date, medications, allergies) VALUES
   ( "John", "Boyd","John_Boyd", "03/06/1984", "aznol:350mg", "hydrapermazol:100mg", "nillacilan" ),
-    ( "John", "Boyd","John_Boyd", "03/06/1984", "aznol:350mg", "hydrapermazol:100mg", "nillacilan" ),
         ( "Jacob", "Boyd", "Jacob_Boyd", "03/06/1989", "pharmacol:5000mg", "terazine:10mg", "noznazol:250mg"  ),
         ( "Tenley", "Boyd","Tenley_Boyd", "02/18/2012","peanut" ),
         ( "Roger", "Boyd","Roger_Boyd", "09/06/2017" ),
@@ -90,4 +63,39 @@ INSERT INTO medicalrecords (first_name, last_name, id_db, birth_date, medication
         ( "Shawna", "Stelzer","Shawna_Stezler", "07/08/1980" ),
         ( "Kendrik", "Stelzer","Kendrick_Stezler", "03/06/2014", "noxidian:100mg", "pharmacol:2500mg"  ),
         ( "Clive", "Ferguson","Clive_Ferguson", "03/06/1994" ),
-        ( "Eric", "Cadigan","Eric_Cadigan", "08/06/1945", "tradoxidine:400mg"  )       
+        ( "Eric", "Cadigan","Eric_Cadigan", "08/06/1945", "tradoxidine:400mg"  )     
+       
+INSERT INTO medications (id_db,medication_name, dose) VALUES
+	  ("John_Boyd", "aznol", "350mg"),
+	    ( "Jacob_Boyd", "pharmacol","5000mg"),
+	    ( "Jacob_Boyd","terazine","10mg"),
+	    ( "Jacob_Boyd", "noznazol","250mg"  ),
+        ( "Felicia_Boyd","tetracyclaz","650mg"),
+        ( "Tony_Cooper","hydrapermazol","300mg"),
+        ( "Tony_Cooper", "dodoxadin","30mg"),
+        ( "Lily", "Cooper","Lily_Cooper", "03/06/1994" ),
+        ( "Sophia_Zemmicks","aznol","60mg"),
+        ( "Sophia_Zemmicks", "hydrapermazol","900mg"),
+        ( "Sophia_Zemmicks", "pharmacol","5000mg"),
+        ( "Sophia_Zemmicks", "terazine","500mg"),
+        ( "Reginold_Walker", "thradox","700mg"),
+        ( "Allison_Boyd", "aznol","200mg"),
+        ( "Brian_Stezler", "ibupurin","200mg"),
+        ( "Brian_Stezler",  "hydrapermazol","400mg"),
+        ( "Kendrick_Stezler", "noxidian","100mg"),
+        ( "Kendrick_Stezler", "pharmacol","2500mg"  ),
+        ( "Eric_Cadigan", "tradoxidine","400mg"  );     
+        
+        
+INSERT INTO allergies (id_db,allergies) VALUES
+  		( "John_Boyd", "nillacilan" ),
+        ( "Tenley_Boyd", "peanut" ),
+        ( "Felicia_Boyd""xilliathal" ),
+        ( "Peter_Duncan""shellfish" ),
+        ( "Tony_Cooper", "shellfish" ),
+        ( "Sophia_Zemmicks","peanut"),
+        ( "Sophia_Zemmicks", "shellfish"),
+        ( "Sophia_Zemmicks", "aznol" ),
+        ( "Reginold_Walker","illisoxian" ),
+        ( "Allison_Boyd", "nillacilan" ),
+        ( "Brian_Stezler", "nillacilan" ),   
