@@ -14,7 +14,7 @@ import lombok.Data;
 @Table(name = "persons")
 public class Person {
 	
-	@Id
+	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
@@ -24,8 +24,9 @@ public class Person {
     @Column(name="last_name")
     private String lastName;
     
+    @Id
     @Column(name="id_db")
-    private String idDb = firstName + "_" + lastName;
+    private String idDb;
 	
 	private String address;
 	
