@@ -17,20 +17,20 @@ public class PersonService {
     @Autowired
     private PersonsRepository personsRepository;
 
-    public Optional<Person> getPerson(final int id) {
-        return personsRepository.findById(id);
+    public Optional<Person> getPerson(final String idDb) {
+        return personsRepository.findById(idDb);
     }
 
     public Iterable<Person> getPersons() {
         return personsRepository.findAll();
     }
     // selon l'énoncé il faut un id qui combine le prénom et le nom
-    public void deletePerson(final int id) {
-    	personsRepository.deleteById(id);
+    public void deletePerson(final String idDb) {
+    	personsRepository.deleteById(idDb);
     }
     
-    public void updatePerson(final int id) {
-    	personsRepository.findById(id);
+    public void updatePerson(final String idDb) {
+    	personsRepository.findById(idDb);
     	
     }
 
