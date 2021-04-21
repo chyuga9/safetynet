@@ -22,9 +22,9 @@ public class FireStationController {
 		return fireStationService.saveFireStation(fireStation);
 	}
 	
-	@DeleteMapping("/firestation/")
-	public void deleteFireStation(@RequestBody FireStation fireStation) {
-		fireStationService.deleteFireStation(fireStation);
+	@DeleteMapping("/firestation/{station}")
+	public void deleteFireStation(@PathVariable("station")String station, @RequestBody FireStation fireStation) {
+		fireStationService.deleteFireStation(station, fireStation);
 	}
 	
 	@PutMapping("/firestation")
