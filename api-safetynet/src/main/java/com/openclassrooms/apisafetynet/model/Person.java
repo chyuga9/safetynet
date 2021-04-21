@@ -35,13 +35,13 @@ public class Person {
 	
 	private String city;
 	
-	private int zip;
+	private String zip;
 	
 	private String phone;
 	
 	private String email;
 	
-	@JsonFormat(pattern="dd/MM/yyyy")
+	@JsonFormat(pattern="MM/dd/yyyy")
 	private Date birthdate;
 	
 	private ArrayList<Medication> medications;
