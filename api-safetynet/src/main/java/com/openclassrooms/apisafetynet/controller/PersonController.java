@@ -44,6 +44,10 @@ public class PersonController {
         return personService.savePerson(person);
     }
     
+    @PutMapping("/person/{id_db}")
+    public Person updatePerson(@PathVariable("id_db") String idDb, @RequestBody Person person) {
+        return personService.updatePerson(idDb,person);
+    }
     /**
 	 * Update - Update an existing person
 	 * @param id - The id of the person to update
