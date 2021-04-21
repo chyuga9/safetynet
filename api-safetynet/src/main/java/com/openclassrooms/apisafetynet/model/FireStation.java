@@ -13,11 +13,12 @@ import lombok.Data;
 @Entity
 @Table(name = "firestations")
 public class FireStation {
-	
+	/*
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
+	private int id;
+	*/
+	@Id
 	private String address;
 	
 	private int station;
