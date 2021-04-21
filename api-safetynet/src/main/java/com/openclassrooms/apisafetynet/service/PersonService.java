@@ -4,13 +4,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.apisafetynet.model.Allergie;
 import com.openclassrooms.apisafetynet.model.FireStation;
+import com.openclassrooms.apisafetynet.model.Medication;
 import com.openclassrooms.apisafetynet.model.Person;
+import com.openclassrooms.apisafetynet.repository.AllergiesRepository;
+import com.openclassrooms.apisafetynet.repository.MedicationsRepository;
 import com.openclassrooms.apisafetynet.repository.PersonsRepository;
 
 import lombok.Data;
@@ -21,6 +26,10 @@ public class PersonService {
 
     @Autowired
     private PersonsRepository personsRepository;
+    @Autowired
+    private MedicationsRepository medicationsRepository;
+    @Autowired
+    private AllergiesRepository allergiesRepository;
 
     public Optional<Person> getPerson(final String idDb) {
         return personsRepository.findById(idDb);
@@ -77,4 +86,43 @@ public class PersonService {
         return savedPerson;
     }
 
-}
+	public Person createMedicalRecord(Person person) {
+    	String id_bd = person.getFirstName() + "_" +person.getLastName();
+    	person.setIdDb(id_bd);
+    	/*
+    	ArrayList<Medication> medication = person.getMedications();
+    	ArrayList<Allergie> allergie = person.getAllergies();
+    	if(medication != null) {
+    		savedPerson.setMedications(medication);
+    		//medicationsRepository.saveAll(medication);
+    		}
+    	if(allergie != null) {
+    		savedPerson.setAllergies(allergie);
+    		//allergiesRepository.saveAll(allergie);
+    		}
+    		*/
+    	Person savedPerson = personsRepository.save(person);
+        return savedPerson;
+        
+	
+	}
+	public Person updateMedicalRecord(String idDb, Person person) {
+		Optional<Person> medicalRecord = personsRepository.findById(person.getIdDb());
+    	ArrayList<Medication> medication = person.getMedications();
+    	ArrayList<Allergie> allergie = person.getAllergies();
+    	Date birthDate = person.getBirthdate();
+    	if(birthDate != null) {
+    		medicalRecord.get().setBirthdate(birthDate);}
+    	if(medication != null) {
+    		medicalRecord.get().setMedications(medication);
+    		//medicationsRepository.saveAll(medication);
+    		}
+    	if(allergie != null) {
+    		medicalRecord.get().setAllergies(allergie);
+    		//allergiesRepository.saveAll(allergie);
+    		}
+    	return personsRepository.save(medicalRecord.get());
+        }
+	
+	}
+
