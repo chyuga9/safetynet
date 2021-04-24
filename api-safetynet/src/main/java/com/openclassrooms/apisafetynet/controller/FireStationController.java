@@ -1,5 +1,7 @@
 package com.openclassrooms.apisafetynet.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,10 @@ public class FireStationController {
     public Iterable<FireStation> getFireStations() {
         return fireStationService.getFireStations();
     }
+	@GetMapping("/firestation?stationNumber={station_number}")
+    public List<FireStation> getAddressesByStationNumber(@PathVariable ("station_number") int station) {
+        return fireStationService.getAddressesByStationNumber(station);
+    }
 	@PostMapping("/firestation")
 	public FireStation createFireStation(@RequestBody FireStation fireStation) {
 		return fireStationService.saveFireStation(fireStation);
@@ -37,4 +43,5 @@ public class FireStationController {
 	public FireStation updateFireStation(@RequestBody FireStation fireStation) {
 		return fireStationService.updateFireStation(fireStation);
 	}
+	
 }
