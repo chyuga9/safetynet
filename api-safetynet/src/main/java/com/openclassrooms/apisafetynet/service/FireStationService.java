@@ -1,5 +1,6 @@
 package com.openclassrooms.apisafetynet.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.apisafetynet.model.FireStation;
+import com.openclassrooms.apisafetynet.model.Person;
 import com.openclassrooms.apisafetynet.repository.FireStationsRepository;
 
 import lombok.Data;
@@ -49,6 +51,12 @@ public class FireStationService<U> {
     	 //.orElseGet(() -> {    	        fireStation.setAddress(address);    	        fireStationRepository.save(fireStation);});
     	
     }
+    // AJouter ensuite un décompte du nombre d'enfants et d'adultes
+	public List<FireStation> getAddressesByStationNumber(int station) {
+		
+		List<FireStation> address = fireStationRepository.findAllByStationNumber(station);
+		return address;
+	}
     /*
      *  @PutMapping("/employees/{id}")
   Employee replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
