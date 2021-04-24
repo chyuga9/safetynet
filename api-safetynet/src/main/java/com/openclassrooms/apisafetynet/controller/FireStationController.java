@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.apisafetynet.model.FireStation;
@@ -20,13 +22,14 @@ public class FireStationController {
 
 	@Autowired
 	private FireStationService fireStationService;
-	
+	/*
 	@GetMapping("/firestation")
     public Iterable<FireStation> getFireStations() {
         return fireStationService.getFireStations();
     }
-	@GetMapping("/firestation?stationNumber={station_number}")
-    public List<FireStation> getAddressesByStationNumber(@PathVariable ("station_number") int station) {
+    */
+	@GetMapping("/firestation")
+    public List<FireStation> getAddressesByStationNumber(@RequestParam("stationNumber") int station) {
         return fireStationService.getAddressesByStationNumber(station);
     }
 	@PostMapping("/firestation")
