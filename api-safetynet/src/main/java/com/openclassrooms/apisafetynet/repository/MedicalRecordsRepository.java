@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.openclassrooms.apisafetynet.model.MedicalRecord;
 
 @Repository
-public interface MedicalRecordsRepository extends CrudRepository<MedicalRecord, Long> {
+public interface MedicalRecordsRepository extends CrudRepository<MedicalRecord, String> {
 
 }
