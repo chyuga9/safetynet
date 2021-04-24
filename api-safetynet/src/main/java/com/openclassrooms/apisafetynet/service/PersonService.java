@@ -69,7 +69,7 @@ public class PersonService {
 
     public Person savePerson(Person person) {
     	
-    	String id_bd = person.getFirstName() + "_" +person.getLastName();
+    	String id_bd = person.getFirstName() + "_" + person.getLastName();
     	person.setIdDb(id_bd);
     	/*String birthdateToString = String.valueOf(person.getBirthdate());
     	SimpleDateFormat formater = new SimpleDateFormat("DD/MM/YYYY");
@@ -85,44 +85,7 @@ public class PersonService {
         Person savedPerson = personsRepository.save(person);
         return savedPerson;
     }
+}
 
-	public Person createMedicalRecord(Person person) {
-    	String id_bd = person.getFirstName() + "_" +person.getLastName();
-    	person.setIdDb(id_bd);
-    	/*
-    	ArrayList<Medication> medication = person.getMedications();
-    	ArrayList<Allergie> allergie = person.getAllergies();
-    	if(medication != null) {
-    		savedPerson.setMedications(medication);
-    		//medicationsRepository.saveAll(medication);
-    		}
-    	if(allergie != null) {
-    		savedPerson.setAllergies(allergie);
-    		//allergiesRepository.saveAll(allergie);
-    		}
-    		*/
-    	Person savedPerson = personsRepository.save(person);
-        return savedPerson;
-        
 	
-	}
-	public Person updateMedicalRecord(String idDb, Person person) {
-		Optional<Person> medicalRecord = personsRepository.findById(person.getIdDb());
-    	ArrayList<Medication> medication = person.getMedications();
-    	ArrayList<Allergie> allergie = person.getAllergies();
-    	Date birthDate = person.getBirthdate();
-    	if(birthDate != null) {
-    		medicalRecord.get().setBirthdate(birthDate);}
-    	if(medication != null) {
-    		medicalRecord.get().setMedications(medication);
-    		//medicationsRepository.saveAll(medication);
-    		}
-    	if(allergie != null) {
-    		medicalRecord.get().setAllergies(allergie);
-    		//allergiesRepository.saveAll(allergie);
-    		}
-    	return personsRepository.save(medicalRecord.get());
-        }
-	
-	}
 
