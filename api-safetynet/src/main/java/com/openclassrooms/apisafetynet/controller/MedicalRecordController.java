@@ -1,28 +1,40 @@
 package com.openclassrooms.apisafetynet.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openclassrooms.apisafetynet.model.MedicalRecord;
 import com.openclassrooms.apisafetynet.model.Person;
+import com.openclassrooms.apisafetynet.service.MedicalRecordService;
 import com.openclassrooms.apisafetynet.service.PersonService;
 
 @RestController
 public class MedicalRecordController {
 
 	@Autowired
-	private PersonService personService;
+	private MedicalRecordService medicalRecordService;
 	
+	@GetMapping("/medicalrecord")
+    public Iterable<MedicalRecord> getMedicalRecords() {
+        return medicalRecordService.getMedicalRecords();
+    }
 	@PostMapping("/medicalrecord")
-	public Person createMedicalRecord(@RequestBody Person person) {
-		return personService.createMedicalRecord(person);
+	public MedicalRecord createMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+		return medicalRecordService.createMedicalRecord(medicalRecord);
 	}
 	
     @PutMapping("/medicalrecord/{id_db}")
-    public Person updateMedicalRecord(@PathVariable("id_db") String idDb, @RequestBody Person person) {
-		return personService.updateMedicalRecord(idDb,person);
+    public MedicalRecord updateMedicalRecord(@PathVariable("id_db") String idDb, @RequestBody MedicalRecord medicalRecord) {
+		return medicalRecordService.updateMedicalRecord(idDb,medicalRecord);
 	}
+    @DeleteMapping("/medicalrecord/{id_bd}")
+    public void deletePerson(@PathVariable("id_bd") String idDb) {
+    	medicalRecordService.deleteMedicalRecord(idDb);
+    }
 }
