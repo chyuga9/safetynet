@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -44,9 +45,6 @@ public class Person {
 	@JsonFormat(pattern="MM/dd/yyyy")
 	private Date birthdate;
 	
-	private ArrayList<Medication> medications;
 	
-	private ArrayList<Allergie> allergies;
-
 	
 }
