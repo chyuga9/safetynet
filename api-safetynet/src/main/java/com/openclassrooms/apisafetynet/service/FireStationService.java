@@ -26,7 +26,7 @@ public class FireStationService<U> {
         return fireStationRepository.findAll();
     }
 
-    public void deleteFireStation(String station, final FireStation fireStation) {
+    public void deleteFireStation(final FireStation fireStation) {
     	Optional<FireStation> deletedFireStation = fireStationRepository.findById(fireStation.getAddress());
     	fireStationRepository.delete(deletedFireStation.get());
     }
