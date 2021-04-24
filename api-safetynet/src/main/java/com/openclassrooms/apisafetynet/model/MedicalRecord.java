@@ -1,7 +1,7 @@
 package com.openclassrooms.apisafetynet.model;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -17,7 +19,7 @@ import lombok.Data;
 @Table(name = "medicalrecords")
 public class MedicalRecord {
 	
-	@Id
+	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
@@ -26,10 +28,12 @@ public class MedicalRecord {
 
     @Column(name="last_name")
     private String lastName;
+    
+    @Id
+    private String idBd;
 	
-	private String address;
-	
-	private Date birth;
+	@JsonFormat(pattern="MM/dd/yyyy")
+	private Date birthdate;
 	
 	private ArrayList<String> medications;
 	
