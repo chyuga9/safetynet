@@ -1,8 +1,10 @@
 package com.openclassrooms.apisafetynet.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,11 +31,16 @@ public class PersonController {
     * 
     * Surement à refaire ou supprimer car il ne demande pas juste des personnes
     */
+    
     @GetMapping("/person")
     public Iterable<Person> getPersons() {
         return personService.getPersons();
     }
     
+    @GetMapping(value = "/firestation" , params ="stationNumber")
+    public Iterable<Person> getAddressesByStationNumber(@RequestParam("stationNumber") int station) {
+        return personService.getAddressesByStationNumber(station);
+    }
     /**
 	 * Create - Add a new person
 	 * @param person An object person
