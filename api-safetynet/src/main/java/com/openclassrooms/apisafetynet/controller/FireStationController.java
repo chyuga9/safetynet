@@ -22,16 +22,17 @@ public class FireStationController {
 
 	@Autowired
 	private FireStationService fireStationService;
-	/*
+	
 	@GetMapping("/firestation")
     public Iterable<FireStation> getFireStations() {
         return fireStationService.getFireStations();
     }
-    */
+	/*
 	@GetMapping("/firestation")
-    public List<FireStation> getAddressesByStationNumber(@RequestParam("stationNumber") int station) {
+    public List<Person> getAddressesByStationNumber(@RequestParam("stationNumber") int station) {
         return fireStationService.getAddressesByStationNumber(station);
     }
+    */
 	@PostMapping("/firestation")
 	public FireStation createFireStation(@RequestBody FireStation fireStation) {
 		return fireStationService.saveFireStation(fireStation);
