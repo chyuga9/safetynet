@@ -10,7 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -18,6 +22,24 @@ import lombok.Data;
 
 @Data
 @Entity
+@SqlResultSetMapping(
+		name = "PersonCaringByStation",
+		entities= {
+			@EntityResult(
+					entityClass = com.openclassrooms.apisafetynet.model.Person.class,
+					fields = {
+							@FieldResult(name = "idDb", column = "id_db"),
+
+					})
+		})
+@NamedNativeQuery(
+		name = "Persons",
+		query = "SELECT id_db FROM persons WHERE last_name = 'Cooper'", //select persons.first_name, persons.last_name, persons.address, persons.phone FROM persons LEFT JOIN firestations ON firestations.address = persons.address WHERE firestations.station = 3;
+		resultSetMapping = "PersonCaringByStation")		
+//For query phoneAlert :select  persons.phone FROM persons LEFT JOIN firestations ON firestations.address = persons.address WHERE firestations.station = '3';
+// For query personInfo, SELECT persons.last_name, persons.address, medicalrecords.birthdate, persons.email, medicalrecords.medications, medicalrecords.allergies FROM persons JOIN medicalrecords ON persons.id_db = medicalrecords.id_bd WHERE persons.last_name = "Marrack";
+// For query email, SELECT persons.email FROM persons;
+
 @Table(name = "persons")
 public class Person {
 	
@@ -34,16 +56,16 @@ public class Person {
 	
 	private String address;
 	
-	private String city;
+    private String city;
 	
-	private String zip;
+    private String zip;
 	
-	private String phone;
+    private String phone;
 	
-	private String email;
+    private String email;
 	
-	@JsonFormat(pattern="MM/dd/yyyy")
-	private Date birthdate;
+	//@JsonFormat(pattern="MM/dd/yyyy")
+	//private Date birthdate;
 	
 	
 	

@@ -38,7 +38,7 @@ public class PersonController {
     }
     
     @GetMapping(value = "/firestation" , params ="stationNumber")
-    public Iterable<Person> getAddressesByStationNumber(@RequestParam("stationNumber") int station) {
+    public Iterable<Person> getAddressesByStationNumber(@RequestParam("stationNumber") String station) {
         return personService.getAddressesByStationNumber(station);
     }
     /**

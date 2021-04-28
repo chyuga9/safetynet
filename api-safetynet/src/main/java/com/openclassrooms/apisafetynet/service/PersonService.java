@@ -5,7 +5,11 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +34,10 @@ public class PersonService {
     private MedicationsRepository medicationsRepository;
     @Autowired
     private AllergiesRepository allergiesRepository;
-
+    
+    @PersistenceContext
+    private EntityManager manager;
+    
     public Optional<Person> getPerson(final String idDb) {
         return personsRepository.findById(idDb);
     }
@@ -47,15 +54,15 @@ public class PersonService {
     	
     	Optional<Person> updatedPerson = personsRepository.findById(idDb);
     	String address = person.getAddress();
-    	Date birthDate = person.getBirthdate();
+    	//Date birthDate = person.getBirthdate();
     	String city = person.getCity();
     	String email = person.getEmail();
     	String phone = person.getPhone();
     	String zip = person.getZip();
     	if(address != null) {
     	updatedPerson.get().setAddress(address);}
-    	if(birthDate != null) {
-    	updatedPerson.get().setBirthdate(birthDate);}
+    	//if(birthDate != null) {
+    	//updatedPerson.get().setBirthdate(birthDate);}
     	if(city != null) {
     	updatedPerson.get().setCity(city);}
     	if(email != null) {
@@ -85,6 +92,14 @@ public class PersonService {
         Person savedPerson = personsRepository.save(person);
         return savedPerson;
     }
+public Iterable<Person> getAddressesByStationNumber(String station) {
+		/*
+		Iterable<Person> address = personsRepository.findAllByStationNumber(station);
+		return address;
+		*/
+	Iterable<Person> persons = manager.createNamedQuery("Persons", Person.class).getResultList();
+	return persons;
+	}
 }
 
 	

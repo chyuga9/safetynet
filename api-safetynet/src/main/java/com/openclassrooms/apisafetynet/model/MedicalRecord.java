@@ -16,6 +16,8 @@ import lombok.Data;
 
 @Data
 @Entity
+//For query child alert (select  persons.first_name, persons.last_name, medicalrecords.birthdate FROM persons LEFT JOIN medicalrecords ON medicalrecords.id_bd = persons.id_db WHERE persons.address = '1509 Culver St' AND medicalrecords.birthdate > "2003-04-27" ;
+// Du coup pour la liste des personnes qui vivent avec les enfants, est ce que je dois faire une deuxieme requete ? 
 @Table(name = "medicalrecords")
 public class MedicalRecord {
 	
