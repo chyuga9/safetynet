@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.openclassrooms.apisafetynet.model.Allergie;
 import com.openclassrooms.apisafetynet.model.FireStation;
+import com.openclassrooms.apisafetynet.model.MedicalRecord;
 import com.openclassrooms.apisafetynet.model.Medication;
 import com.openclassrooms.apisafetynet.model.Person;
 import com.openclassrooms.apisafetynet.repository.AllergiesRepository;
@@ -92,6 +93,16 @@ public class PersonService {
         Person savedPerson = personsRepository.save(person);
         return savedPerson;
     }
+ // Pour rentrer les données plus vite pour moi
+    public Iterable<Person> savePersons(Iterable<Person> persons) {
+    	for(Person pers : persons) {
+    	String id_bd = pers.getFirstName() + "_" +  pers.getLastName();
+    	pers.setIdDb(id_bd);
+    	personsRepository.save(pers);
+    	}
+    	
+    	 return persons;
+        }
 public Iterable<Person> getAddressesByStationNumber(String station) {
 		/*
 		Iterable<Person> address = personsRepository.findAllByStationNumber(station);

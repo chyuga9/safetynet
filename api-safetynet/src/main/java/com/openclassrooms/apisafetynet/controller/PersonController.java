@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openclassrooms.apisafetynet.model.MedicalRecord;
 import com.openclassrooms.apisafetynet.model.Person;
 import com.openclassrooms.apisafetynet.service.PersonService;
 
@@ -50,7 +51,10 @@ public class PersonController {
     public Person createPerson(@RequestBody Person person) {
         return personService.savePerson(person);
     }
-    
+    @PostMapping("/persons")
+	public Iterable<Person> createPerson(@RequestBody Iterable<Person> persons) {
+		return personService.savePersons(persons);
+	}
     @PutMapping("/person/{id_db}")
     public Person updatePerson(@PathVariable("id_db") String idDb, @RequestBody Person person) {
         return personService.updatePerson(idDb,person);

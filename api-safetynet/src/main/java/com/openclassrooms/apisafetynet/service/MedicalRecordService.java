@@ -2,6 +2,7 @@ package com.openclassrooms.apisafetynet.service;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,17 @@ public class MedicalRecordService {
         
 	
 	}
+    // Pour rentrer les données plus vite pour moi
+    public Iterable<MedicalRecord> createMedicalRecords(Iterable<MedicalRecord> medicalRecords) {
+    	for(MedicalRecord medRec : medicalRecords) {
+    	String idBd = medRec.getFirstName() + "_" +  medRec.getLastName();
+    	medRec.setIdBd(idBd);
+    	medicalRecordsRepository.save(medRec);
+    	}
+    	
+    	 return medicalRecords;
+        }
+    
 	public MedicalRecord updateMedicalRecord(String idDb, MedicalRecord medicalRecord) {
 		Optional<MedicalRecord> updatedMedicalRecord = medicalRecordsRepository.findById(idDb);
     	ArrayList<String> medication = medicalRecord.getMedications();
@@ -89,4 +101,10 @@ public class MedicalRecordService {
 	public void deleteMedicalRecord(final String idDb) {
     	medicalRecordsRepository.deleteById(idDb);
     }
+	
+	public Iterable<MedicalRecord> searchChild(String address){
+		Iterable<MedicalRecord> childAndFamily = medicalRecordsRepository.findAllByAddressAndBirthdate(address);
+		return childAndFamily;
+		
+	}
 }

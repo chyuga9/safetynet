@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.apisafetynet.model.FireStation;
+import com.openclassrooms.apisafetynet.model.MedicalRecord;
 import com.openclassrooms.apisafetynet.model.Person;
 import com.openclassrooms.apisafetynet.service.FireStationService;
 
@@ -36,6 +37,10 @@ public class FireStationController {
 	@PostMapping("/firestation")
 	public FireStation createFireStation(@RequestBody FireStation fireStation) {
 		return fireStationService.saveFireStation(fireStation);
+	}
+	@PostMapping("/firestations")
+	public Iterable<FireStation> createMedicalRecords(@RequestBody Iterable<FireStation> fireStations) {
+		return fireStationService.saveFireStations(fireStations);
 	}
 	
 	@DeleteMapping("/firestation")
