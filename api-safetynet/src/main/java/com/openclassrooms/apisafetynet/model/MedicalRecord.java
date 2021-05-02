@@ -21,9 +21,9 @@ import lombok.Data;
 @Table(name = "medicalrecords")
 public class MedicalRecord {
 	
-	
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private int id;
 	
 	@Column(name="first_name")
     private String firstName;
@@ -31,7 +31,7 @@ public class MedicalRecord {
     @Column(name="last_name")
     private String lastName;
     
-    @Id
+    
     private String idBd;
 	
 	@JsonFormat(pattern="MM/dd/yyyy")
