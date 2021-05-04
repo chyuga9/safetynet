@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedNativeQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.EntityResult;
@@ -58,8 +60,12 @@ public class Person {
     @Column(name="id_db")
     private String idDb;
 	
-	private String address;
-	
+    private String address;
+	/*
+    @ManyToOne
+	@PrimaryKeyJoinColumn(name = "address")
+    private FireStation fireStation;
+	*/
     private String city;
 	
     private String zip;
@@ -67,6 +73,9 @@ public class Person {
     private String phone;
 	
     private String email;
+    
+    @OneToOne
+    private MedicalRecord medicalRecord;
 	
 	//@JsonFormat(pattern="MM/dd/yyyy")
 	//private Date birthdate;

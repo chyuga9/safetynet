@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -31,8 +33,12 @@ public class MedicalRecord {
     @Column(name="last_name")
     private String lastName;
     
-    
+    @Column(name = "id_bd")
     private String idBd;
+    
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "id_db")
+    private Person person;
 	
 	@JsonFormat(pattern="MM/dd/yyyy")
 	private Date birthdate;
