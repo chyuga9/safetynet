@@ -79,6 +79,7 @@ public class PersonService {
     	
     	String id_bd = person.getFirstName() + "_" + person.getLastName();
     	person.setIdDb(id_bd);
+    
     	/*String birthdateToString = String.valueOf(person.getBirthdate());
     	SimpleDateFormat formater = new SimpleDateFormat("DD/MM/YYYY");
     	Date birthdate;
@@ -110,6 +111,19 @@ public Iterable<Person> getAddressesByStationNumber(String station) {
 		*/
 	Iterable<Person> persons = manager.createNamedQuery("Persons", Person.class).getResultList();
 	return persons;
+	}
+	public Person updateMedicalRecordsPerson(String idBd, MedicalRecord medicalRecord) {
+		Optional<Person> person = personsRepository.findByIdDb(idBd);
+    	person.get().setMedicalRecord(medicalRecord);
+    	return personsRepository.save(person.get());
+	}
+	public Iterable<Person> updateFireStationsPerson(String address, FireStation fireStation) {
+		Iterable<Person> persons = personsRepository.findByAddress(address);
+    	for(Person pers : persons) {
+    		pers.setFireStation(fireStation);
+        	personsRepository.save(pers);
+    	}
+    		return persons;
 	}
 }
 
