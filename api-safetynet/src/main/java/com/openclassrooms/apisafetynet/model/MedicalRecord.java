@@ -1,7 +1,7 @@
 package com.openclassrooms.apisafetynet.model;
 
 import java.util.ArrayList;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -42,7 +44,8 @@ public class MedicalRecord {
     //@OneToOne(mappedBy = "medicalRecord")
     //private Person person;
 	
-	@JsonFormat(pattern="MM/dd/yyyy")
+	//@JsonFormat(pattern="MM/dd/yyyy")
+    @Temporal(TemporalType.DATE)
 	private Date birthdate;
 	
 	private ArrayList<String> medications;
