@@ -13,6 +13,7 @@ import com.openclassrooms.apisafetynet.model.MedicalRecord;
 import com.openclassrooms.apisafetynet.model.Medication;
 import com.openclassrooms.apisafetynet.model.Person;
 import com.openclassrooms.apisafetynet.repository.MedicalRecordsRepository;
+import com.openclassrooms.apisafetynet.repository.PersonsRepository;
 
 import lombok.Data;
 
@@ -22,6 +23,9 @@ public class MedicalRecordService {
 
     @Autowired
     private MedicalRecordsRepository medicalRecordsRepository;
+    
+    @Autowired
+    private PersonService personService;
     /*
     public Optional<MedicalRecord> getMedicalRecord(final Long id) {
         return medicalRecordsRepository.findById(id);
@@ -51,20 +55,14 @@ public class MedicalRecordService {
     public MedicalRecord createMedicalRecord(MedicalRecord medicalRecord) {
     	String idBd = medicalRecord.getFirstName() + "_" + medicalRecord.getLastName();
     	medicalRecord.setIdBd(idBd);
-    	MedicalRecord savedMedicalRecord= medicalRecordsRepository.save(medicalRecord);
-
-    	ArrayList<String> medications = medicalRecord.getMedications();
-    	ArrayList<String> allergies = medicalRecord.getAllergies();
     	/*
-    	if(medication != null) {
-    		savedPerson.setMedications(medication);
-    		//medicationsRepository.saveAll(medication);
-    		}
-    	if(allergie != null) {
-    		savedPerson.setAllergies(allergie);
-    		//allergiesRepository.saveAll(allergie);
-    		}
-    		*/
+    	String pers_id =medicalRecordsRepository.findByIdDb(medicalRecord.getIdBd());
+    	if(!pers_id.isEmpty()) {
+    		medicalRecordsRepository.createRowInJointTable(idBd, pers_id);
+    	};    	*/
+    	MedicalRecord savedMedicalRecord= medicalRecordsRepository.save(medicalRecord);
+    	personService.updateMedicalRecordsPerson(idBd,savedMedicalRecord);
+   
         return savedMedicalRecord;
         
 	
@@ -75,6 +73,7 @@ public class MedicalRecordService {
     	String idBd = medRec.getFirstName() + "_" +  medRec.getLastName();
     	medRec.setIdBd(idBd);
     	medicalRecordsRepository.save(medRec);
+    	personService.updateMedicalRecordsPerson(idBd,medRec);
     	}
     	
     	 return medicalRecords;
@@ -100,11 +99,4 @@ public class MedicalRecordService {
 	
 	public void deleteMedicalRecord(final String idDb) {
     	medicalRecordsRepository.deleteById(idDb);
-    }
-	
-	public Iterable<MedicalRecord> searchChild(String address){
-		Iterable<MedicalRecord> childAndFamily = medicalRecordsRepository.findAllByAddressAndBirthdate(address);
-		return childAndFamily;
-		
-	}
-}
+    }}

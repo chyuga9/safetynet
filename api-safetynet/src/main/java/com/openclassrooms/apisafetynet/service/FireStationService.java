@@ -23,6 +23,8 @@ public class FireStationService<U> {
 
     @Autowired
     private FireStationsRepository fireStationRepository;
+    @Autowired
+    private PersonService personService;
     
     private static final Logger logger = LogManager.getLogger(ApiSafetynetApplication.class);
 
@@ -43,12 +45,15 @@ public class FireStationService<U> {
     
     public FireStation saveFireStation(FireStation fireStation) {
     	FireStation savedFireStation = fireStationRepository.save(fireStation);
+    	personService.updateFireStationsPerson(savedFireStation.getAddress(), savedFireStation);
         return savedFireStation;
     }
  // Pour rentrer les données plus vite pour moi
     public Iterable<FireStation> saveFireStations(Iterable<FireStation> fireStations) {
     	for(FireStation fS : fireStations) {
     		fireStationRepository.save(fS);
+        	personService.updateFireStationsPerson(fS.getAddress(), fS);
+
     	}
     	
     	 return fireStations;
