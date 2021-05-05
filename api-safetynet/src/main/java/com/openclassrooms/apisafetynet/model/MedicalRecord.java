@@ -13,6 +13,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -23,7 +24,7 @@ import lombok.Data;
 @Table(name = "medicalrecords")
 public class MedicalRecord {
 	
-	@Id
+    @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
@@ -34,11 +35,12 @@ public class MedicalRecord {
     private String lastName;
     
     @Column(name = "id_bd")
+    @JsonIgnore
     private String idBd;
     
-    @OneToOne
-    @PrimaryKeyJoinColumn(name = "id_db")
-    private Person person;
+    
+    //@OneToOne(mappedBy = "medicalRecord")
+    //private Person person;
 	
 	@JsonFormat(pattern="MM/dd/yyyy")
 	private Date birthdate;

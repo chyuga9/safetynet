@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToOne;
@@ -19,6 +21,8 @@ import javax.persistence.EntityResult;
 import javax.persistence.FieldResult;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 
@@ -58,14 +62,16 @@ public class Person {
     
     
     @Column(name="id_db")
+    @JsonIgnore
     private String idDb;
 	
     private String address;
-	/*
+	
     @ManyToOne
-	@PrimaryKeyJoinColumn(name = "address")
+	@JoinColumn(name = "firestation_id",referencedColumnName = "id")
+    @JsonIgnore
     private FireStation fireStation;
-	*/
+	
     private String city;
 	
     private String zip;
@@ -74,8 +80,25 @@ public class Person {
 	
     private String email;
     
-    @OneToOne
-    private MedicalRecord medicalRecord;
+   @OneToOne
+   @JoinColumn(name = "medicalrecord_id", referencedColumnName = "id")
+   @JsonIgnore
+   private MedicalRecord medicalRecord;
+
+public Person(String firstName, String lastName, String address, String city, String zip, String phone, String email) {
+	super();
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.address = address;
+	this.city = city;
+	this.zip = zip;
+	this.phone = phone;
+	this.email = email;
+}
+
+public Person() {
+	super();
+}
 	
 	//@JsonFormat(pattern="MM/dd/yyyy")
 	//private Date birthdate;
