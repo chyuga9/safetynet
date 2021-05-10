@@ -1,7 +1,7 @@
 package com.openclassrooms.apisafetynet.model;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,12 +44,13 @@ public class MedicalRecord {
     //@OneToOne(mappedBy = "medicalRecord")
     //private Person person;
 	
-	//@JsonFormat(pattern="MM/dd/yyyy")
-    @Temporal(TemporalType.DATE)
+	@JsonFormat(pattern="MM/dd/yyyy")
 	private Date birthdate;
 	
 	private ArrayList<String> medications;
 	
 	private ArrayList<String> allergies;
+	
+	private Person person;
 	
 }
