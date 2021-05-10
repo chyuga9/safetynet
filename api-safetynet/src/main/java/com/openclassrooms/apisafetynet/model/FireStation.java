@@ -1,5 +1,7 @@
 package com.openclassrooms.apisafetynet.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -26,6 +30,10 @@ public class FireStation {
 	private String address;
 	
 	private int station;
+	
+	@OneToMany
+    @JsonIgnore
+	private List<Person> persons;
 	/*
 	@OneToMany
 	@PrimaryKeyJoinColumn(name = "address")
