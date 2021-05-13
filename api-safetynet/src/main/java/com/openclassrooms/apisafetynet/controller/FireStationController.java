@@ -64,9 +64,14 @@ public class FireStationController {
        return fireStationService.getPeople(station);
    }
 	
-	@GetMapping(value = "/firestation", params = "address")
+	@GetMapping(value = "/fire", params = "address")
     public Iterable<FireAlert> getFireAlert(@RequestParam("address") String address) {
         return fireStationService.getFireAlert(address);
+    }
+	
+	@GetMapping(value = "/flood/stations", params = "stations")
+    public Iterable<FireAlert> getFloodAlert(@RequestParam("stations") int[] stations) {
+        return fireStationService.getFloodAlert(stations);
     }
 	/*
 	

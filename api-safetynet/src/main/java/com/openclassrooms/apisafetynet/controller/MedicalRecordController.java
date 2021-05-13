@@ -27,10 +27,12 @@ public class MedicalRecordController {
     public Iterable<MedicalRecord> getMedicalRecords() {
         return medicalRecordService.getMedicalRecords();
     }
+	/*
 	@GetMapping("/childAlert")
 	public Iterable<MedicalRecord> getChildAndFamily(@RequestParam ("address") String address){
 		return medicalRecordService.searchChild(address);
 	}
+	*/
 	@PostMapping("/medicalrecord")
 	public MedicalRecord createMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
 		return medicalRecordService.createMedicalRecord(medicalRecord);

@@ -2,6 +2,7 @@ package com.openclassrooms.apisafetynet.service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -50,7 +51,7 @@ public class FireStationService<U> {
     }
 
     public Iterable<FireStation> getFireStations() {
-        logger.info("Recherche les casernes");
+        logger.info("Recherche toutes les casernes");
     	return fireStationRepository.findAll();
     }
     
@@ -95,6 +96,15 @@ public class FireStationService<U> {
 		return personsRepository.findByAddress(address, FireAlert.class);		
 			}
     
+    public Iterable<FireAlert> getFloodAlert( int[] stations) {
+    	ArrayList<FireAlert> list = new ArrayList<>();
+		for(int station : stations) {
+			Iterable<FireAlert> fireAlerts =  (personsRepository.findByFireStation_Station(station, FireAlert.class));
+			for(FireAlert fireAlert : fireAlerts)
+				list.add(fireAlert);
+			}
+		return list;
+    }
   
 
 

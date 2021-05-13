@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ApiSafetynetApplication {
 	
-	private static Logger logger = LogManager.getLogger("ApiSafetynetApplication");
+	private static final Logger logger = LogManager.getLogger(ApiSafetynetApplication.class);
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ApiSafetynetApplication.class, args);

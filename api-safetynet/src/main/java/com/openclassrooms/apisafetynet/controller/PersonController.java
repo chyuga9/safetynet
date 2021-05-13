@@ -1,6 +1,7 @@
 package com.openclassrooms.apisafetynet.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,8 @@ import com.openclassrooms.apisafetynet.model.ChildAlertAndFamily;
 import com.openclassrooms.apisafetynet.model.MedicalRecord;
 import com.openclassrooms.apisafetynet.model.Person;
 import com.openclassrooms.apisafetynet.projection.ChildAlert;
+import com.openclassrooms.apisafetynet.projection.Email;
+import com.openclassrooms.apisafetynet.projection.PersonInfo;
 import com.openclassrooms.apisafetynet.projection.PhoneAlert;
 import com.openclassrooms.apisafetynet.service.PersonService;
 
@@ -38,7 +41,7 @@ public class PersonController {
         personService.deletePerson(idDb);
     }
     
-    @GetMapping("/person")
+    @GetMapping("/persons")
     public Iterable<Person> getPersons() {
         return personService.getPersons();
     }
@@ -59,14 +62,28 @@ public class PersonController {
    
 	//---------- Méthodes personalisées --------
 
-   
     @GetMapping("/childAlert")
     public Iterable<ChildAlertAndFamily> getChildAlert(@RequestParam("address") String address){
     	return personService.getChildAlert(address);
     }
- 
+    
     @GetMapping("/phoneAlert")
     public Iterable<PhoneAlert> getPhones(@RequestParam("firestation") int station){
     	return personService.getPhones(station);
     }
+   
+    @GetMapping(value = "/personInfo")
+    public Iterable<PersonInfo> getPersonInfo(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName){
+    	return personService.getPersonInfo(firstName, lastName);
+    }
+    
+    @GetMapping(value = "/communityEmail")
+    public Iterable<Email> getEmail(@RequestParam("city") String city){
+    	return personService.getEmail(city);
+    }
+ /*
+  * 
+
+ 
+    */
 }

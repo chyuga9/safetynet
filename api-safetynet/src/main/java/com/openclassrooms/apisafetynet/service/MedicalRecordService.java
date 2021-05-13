@@ -8,9 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.openclassrooms.apisafetynet.model.Allergie;
 import com.openclassrooms.apisafetynet.model.MedicalRecord;
-import com.openclassrooms.apisafetynet.model.Medication;
 import com.openclassrooms.apisafetynet.model.Person;
 import com.openclassrooms.apisafetynet.repository.MedicalRecordsRepository;
 import com.openclassrooms.apisafetynet.repository.PersonsRepository;
@@ -26,24 +24,7 @@ public class MedicalRecordService {
     
     @Autowired
     private PersonService personService;
-    /*
-    public Optional<MedicalRecord> getMedicalRecord(final Long id) {
-        return medicalRecordsRepository.findById(id);
-    }
 
-    public Iterable<MedicalRecord> getMedicalRecords() {
-        return medicalRecordsRepository.findAll();
-    }
-
-    public void deleteMedicalRecord(final Long id) {
-    	medicalRecordsRepository.deleteById(id);
-    }
-    
-    public MedicalRecord saveMedicalRecord(MedicalRecord medicaRecord) {
-    	MedicalRecord savedMedicalRecord = medicalRecordsRepository.save(medicaRecord);
-        return savedMedicalRecord;
-    }
-*/
     public Optional<MedicalRecord> getMedicalRecord(final String idDb) {
         return medicalRecordsRepository.findById(idDb);
     }

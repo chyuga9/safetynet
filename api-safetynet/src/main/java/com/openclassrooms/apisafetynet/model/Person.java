@@ -28,6 +28,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "persons")
 public class Person {
 	
 	
@@ -80,10 +81,5 @@ public Person(String firstName, String lastName, String address, String city, St
 public Person() {
 	super();
 }
-	
-	//@JsonFormat(pattern="MM/dd/yyyy")
-	//private Date birthdate;
-	
-	
 	
 }

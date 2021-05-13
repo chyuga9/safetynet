@@ -51,6 +51,8 @@ public class MedicalRecord {
 	
 	private ArrayList<String> allergies;
 	
+	@OneToOne
+	@JsonIgnore
 	private Person person;
 	
 }
