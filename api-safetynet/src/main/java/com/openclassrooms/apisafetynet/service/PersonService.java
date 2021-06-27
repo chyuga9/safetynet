@@ -76,10 +76,14 @@ public class PersonService {
     // Pour rentrer les données plus vite pour moi
     public Iterable<Person> savePersons(Iterable<Person> persons) {
     	for(Person pers : persons) {
-    	String id_bd = pers.getFirstName() + "_" +  pers.getLastName();
+    	savePerson(pers);
+    		/*
+    	 * String id_bd = pers.getFirstName() + "_" +  pers.getLastName();
+    	 
     	pers.setIdDb(id_bd);
     	personsRepository.save(pers);
         logger.info("Enregistrement de " + pers.getFirstName() + " " + pers.getLastName() + " dans la base de données ");
+    	*/
     	}
     	 return persons;
         }
