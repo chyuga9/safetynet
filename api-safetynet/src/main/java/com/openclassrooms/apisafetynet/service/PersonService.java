@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,14 +36,15 @@ import com.openclassrooms.apisafetynet.repository.PersonsRepository;
 import lombok.Data;
 
 @Data
+@Transactional // Besoin de l'ajouter car probleme lorsque j'essayais delete une personne
 @Service
 public class PersonService {
 
     @Autowired
     private PersonsRepository personsRepository;
     
-    @PersistenceContext
-    private EntityManager manager;
+    //@PersistenceContext
+    //private EntityManager manager;
     
     private static final Logger logger = LogManager.getLogger(ApiSafetynetApplication.class);
 
@@ -51,8 +53,9 @@ public class PersonService {
 	//---------- Méthodes de base --------
 
     public void deletePerson(final String idDb) {
+    	System.out.println("Est ce que ca marche ?");
     	Optional<Person> p = personsRepository.deleteByIdDb(idDb);
-        logger.info(p.get().getFirstName() + p.get().getLastName() + " a été supprimé de la base de données");
+        //logger.info(p.get().getFirstName() + p.get().getLastName() + " a été supprimé de la base de données");
     }
     
     public Optional<Person> getPerson(final String idDb) {
@@ -141,15 +144,15 @@ public class PersonService {
 	}
 	
 	//--------- Je ne sais pas pour le reste
-	
+	/*
 public Iterable<Person> getAddressesByStationNumber(String station) {
-		/*
+		
 		Iterable<Person> address = personsRepository.findAllByStationNumber(station);
 		return address;
-		*/
+		
 	Iterable<Person> persons = manager.createNamedQuery("Persons", Person.class).getResultList();
 	return persons;
-	}
+	}*/
 	public Person updateMedicalRecordsPerson(String idBd, MedicalRecord medicalRecord) {
 		Optional<Person> person = personsRepository.findByIdDb(idBd);
     	person.get().setMedicalRecord(medicalRecord);
