@@ -70,7 +70,8 @@ public class PersonControllerTest {
 		mockMvc.perform(
 				post("/person")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content("{\""+Mockito.anyString()+"\":\""+Mockito.anyString()+"\"}"))
+				//.content("{\""+Mockito.anyString()+"\":\""+Mockito.anyString()+"\"}"))
+				.content("{\"firstName\":\"sqqsdf\", \"lastName\":\"Bogqfgqqyd\", \"address\":\"1509 Culver St\", \"city\":\"Culver\", \"zip\":\"97451\", \"phone\":\"841-874-6512\", \"email\":\"jaboyd@email.com\" }"))
 		.andExpect(status()
 				.isCreated());
 	}
@@ -80,16 +81,16 @@ public class PersonControllerTest {
 		mockMvc.perform(
 				post("/persons")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content("{\""+Mockito.anyString()+"\":\""+Mockito.anyString()+"\"}"))
+				.content("[{\"firstName\":\"sqqsdf\", \"lastName\":\"Bogqfgqqyd\", \"address\":\"1509 Culver St\", \"city\":\"Culver\", \"zip\":\"97451\", \"phone\":\"841-874-6512\", \"email\":\"jaboyd@email.com\" },\n"
+						+ "{\"firstName\":\"sqqsdf\", \"lastName\":\"Bogqfgqqyd\", \"address\":\"1509 Culver St\", \"city\":\"Culver\", \"zip\":\"97451\", \"phone\":\"841-874-6512\", \"email\":\"jaboyd@email.com\" }]"))
+				//.content("{\""+Mockito.anyString()+"\":\""+Mockito.anyString()+"\"}]"))
 		.andExpect(status().
 				isCreated());
 		// perform(post("/myapi").contentType(MediaType.APPLICATION_JSON).content("{\"mykey\":\"myvalue\"}"))   
-
 	}
 	
 	@Test
 	public void testPutPersons() throws Exception{
-		json.put("name", "test");
 		mockMvc.perform(
 				put("/person/"+x).contentType(MediaType.APPLICATION_JSON).content("{\""+Mockito.anyString()+"\":\""+Mockito.anyString()+"\"}")).andExpect(status().isOk());
 				//put("/person/"+x).contentType(MediaType.JSON_UTF_8.subtype()).content(("{\"mykey\":\"myvalue\"}"))).andExpect(status().isOk());
