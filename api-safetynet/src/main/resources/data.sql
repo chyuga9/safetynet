@@ -41,7 +41,7 @@ INSERT INTO firestations (address, station) VALUES
         ( "951 LoneTree Rd", "2" );
         
 
-INSERT INTO medicalrecords (first_name, last_name, id_db, birth_date, medications, allergies) VALUES
+INSERT INTO medicalrecords (first_name, last_name, id_bd, birthdate, medications, allergies) VALUES
   ( "John", "Boyd","John_Boyd", "03/06/1984", "aznol:350mg", "hydrapermazol:100mg", "nillacilan" ),
         ( "Jacob", "Boyd", "Jacob_Boyd", "03/06/1989", "pharmacol:5000mg", "terazine:10mg", "noznazol:250mg"  ),
         ( "Tenley", "Boyd","Tenley_Boyd", "02/18/2012","peanut" ),
@@ -64,7 +64,7 @@ INSERT INTO medicalrecords (first_name, last_name, id_db, birth_date, medication
         ( "Shawna", "Stelzer","Shawna_Stezler", "07/08/1980" ),
         ( "Kendrik", "Stelzer","Kendrick_Stezler", "03/06/2014", "noxidian:100mg", "pharmacol:2500mg"  ),
         ( "Clive", "Ferguson","Clive_Ferguson", "03/06/1994" ),
-        ( "Eric", "Cadigan","Eric_Cadigan", "08/06/1945", "tradoxidine:400mg"  )     
+        ( "Eric", "Cadigan","Eric_Cadigan", "08/06/1945", "tradoxidine:400mg"  );     
        
 INSERT INTO medications (id_db,medication_name, dose) VALUES
 	  ("John_Boyd", "aznol", "350mg"),

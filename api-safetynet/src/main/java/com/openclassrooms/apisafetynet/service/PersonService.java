@@ -55,7 +55,7 @@ public class PersonService {
     public void deletePerson(final String idDb) {
     	System.out.println("Est ce que ca marche ?");
     	Optional<Person> p = personsRepository.deleteByIdDb(idDb);
-        //logger.info(p.get().getFirstName() + p.get().getLastName() + " a été supprimé de la base de données");
+        logger.info(p.get().getFirstName() + p.get().getLastName() + " a été supprimé de la base de données");
     }
     
     public Optional<Person> getPerson(final String idDb) {

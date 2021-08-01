@@ -39,15 +39,16 @@ public class FireStationService<U> {
 
 	//---------- Méthodes de base --------
 
-    public void deleteFireStation(final FireStation fireStation) {
-    	Optional<FireStation> deletedFireStation = fireStationRepository.findById(fireStation.getAddress());
+    public void deleteFireStation(int id) {
+    	Optional<FireStation> deletedFireStation = fireStationRepository.findById(id);
+    	String address = deletedFireStation.get().getAddress();
     	fireStationRepository.delete(deletedFireStation.get());
-        logger.info("Suppression de la caserne s'occupant de l'adresse " + fireStation);
+        logger.info("Suppression de la caserne s'occupant de l'adresse " + address);
     }
     
     public Optional<FireStation> getFireStation(final String address) {
         logger.info("Recherche la caserne s'occupant de l'adresse " + address);
-        return fireStationRepository.findById(address);
+        return fireStationRepository.findByAddress(address);
     }
 
     public Iterable<FireStation> getFireStations() {
@@ -72,7 +73,7 @@ public class FireStationService<U> {
         }
     
     public FireStation updateFireStation(FireStation fireStation){
-    	Optional<FireStation> updatedFireStation = fireStationRepository.findById(fireStation.getAddress());
+    	Optional<FireStation> updatedFireStation = fireStationRepository.findById(fireStation.getId());
     	updatedFireStation.get().setStation(fireStation.getStation());
         logger.info("Mise à jour de la caserne " + fireStation.getStation() + " qui s'occupera de l'adresse " + fireStation.getAddress());
     	return fireStationRepository.save(updatedFireStation.get());
