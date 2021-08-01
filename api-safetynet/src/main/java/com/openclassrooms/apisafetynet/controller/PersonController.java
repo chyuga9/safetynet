@@ -8,7 +8,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.http.ResponseEntity.HeadersBuilder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,24 +39,29 @@ public class PersonController {
 
     @Autowired
     private PersonService personService;
+    
+    
+    private ResponseEntity<Void> response;
+
 
 	//---------- Méthodes de base --------
 
 
     @DeleteMapping("/person/{id_bd}")
-    public void deletePerson(@PathVariable("id_bd") String idDb) {
+    public ResponseEntity<String> deletePerson(@PathVariable("id_bd") String idDb) {
     	// Possibilité 1 de gérer une exception
     	Optional<Person> person = personService.getPerson(idDb);
     	if(person == null ) throw new UnfindablePersonException("La personne avec l'id " + idDb + " est INTROUVABLE.");
         personService.deletePerson(idDb);
+        return ResponseEntity.ok().body("Person deleted");
     }
     
     @GetMapping("/persons")
-    public Iterable<Person> getPersons() {
-        return personService.getPersons();
+    public ResponseEntity<Iterable<Person>> getPersons() {
+        return ResponseEntity.ok().body(personService.getPersons());
         
     }
-    
+    /*
     @PostMapping("/person")
     public ResponseEntity<Void> createPerson(@RequestBody Person person) {
         Person p = personService.savePerson(person);
@@ -62,26 +70,42 @@ public class PersonController {
             return ResponseEntity.noContent().build();
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(person.getId())
+                .path("/{id_Db}")
+                .buildAndExpand(person.getIdDb())
                 .toUri();
-        
         return ResponseEntity.created(location).build();
     }
-    /*
+    
     @PostMapping("/persons")
 	public Iterable<Person> createPerson(@RequestBody Iterable<Person> persons) {
 		return personService.savePersons(persons);
 	}
     */
-    // trouver quelle response entity renvoyer pour plusieurs enregsiremens 
+    // trouver quelle response entity renvoyer pour plusieurs enregsiremens
+    
+    @PostMapping("/person")
+    public ResponseEntity<Person> createPerson(@RequestBody Person person) {
+        Person p = personService.savePerson(person);
+        /*//Fonctionne mais je veux tester autre chose
+        
+                return ResponseEntity.created(location).build();
+                */
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id_Db}")
+                .buildAndExpand(person.getIdDb())
+                .toUri();
+        return  ResponseEntity.created(location)
+        		.header("jhyuhuih","uihyug") // juste pour savoir ce que ça fait
+        		.body(p);
+    }
     @PostMapping("/persons")
     public ResponseEntity<Void> createPersons(@RequestBody Iterable<Person> persons) {
     	Iterable<Person> p = personService.savePersons(persons);
         if (p == null)
             return ResponseEntity.noContent().build();
         URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("packdeperson").build(false).toUri();
+                .fromCurrentRequest().path("/packdeperson").build(false).toUri();
         
         return ResponseEntity.created(location).build();
     }

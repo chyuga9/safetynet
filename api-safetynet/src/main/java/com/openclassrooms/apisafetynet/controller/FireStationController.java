@@ -1,8 +1,10 @@
 package com.openclassrooms.apisafetynet.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.openclassrooms.apisafetynet.model.FireStation;
 import com.openclassrooms.apisafetynet.model.MedicalRecord;
@@ -30,24 +33,28 @@ public class FireStationController {
 	 
 	//---------- Méthodes de base --------
 	
-	@DeleteMapping("/firestation")
-	public void deleteFireStation( @RequestBody FireStation fireStation) {
-		fireStationService.deleteFireStation(fireStation);
+	@DeleteMapping("/firestation/{id}")
+	public ResponseEntity<String> deleteFireStation( @PathVariable int id) {
+		fireStationService.deleteFireStation((id));
+		return ResponseEntity.ok().body("Firestation deleted");
 	}
 	
 	@GetMapping("/firestation")
-    public Iterable<FireStation> getFireStations() {
-        return fireStationService.getFireStations();
+    public ResponseEntity<Iterable<FireStation>> getFireStations() {
+        return ResponseEntity.ok().body(fireStationService.getFireStations());
     }
 	
 	@PostMapping("/firestation")
-	public FireStation createFireStation(@RequestBody FireStation fireStation) {
-		return fireStationService.saveFireStation(fireStation);
+	public ResponseEntity<FireStation> createFireStation(@RequestBody FireStation fireStation) {
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(fireStation.getId()).toUri();
+		return ResponseEntity.created(location).body(fireStationService.saveFireStation(fireStation));
 	}
 	
 	@PostMapping("/firestations")
-	public Iterable<FireStation> createMedicalRecords(@RequestBody Iterable<FireStation> fireStations) {
-		return fireStationService.saveFireStations(fireStations);
+	public ResponseEntity<Iterable<FireStation>> createMedicalRecords(@RequestBody Iterable<FireStation> fireStations) {
+		URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/packdefirestation").build(false).toUri();
+        return ResponseEntity.created(location).body(fireStationService.saveFireStations(fireStations));
 	}
 	
 	@PutMapping("/firestation")
