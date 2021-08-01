@@ -24,17 +24,18 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import org.springframework.http.MediaType;
-import com.openclassrooms.apisafetynet.controller.PersonController;
-import com.openclassrooms.apisafetynet.service.PersonService;
 
-@WebMvcTest(controllers = PersonController.class)
-public class PersonControllerTest {
+import com.openclassrooms.apisafetynet.controller.FireStationController;
+import com.openclassrooms.apisafetynet.service.FireStationService;
+
+@WebMvcTest(controllers = FireStationController.class)
+public class FireStationControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
 	
 	@MockBean
-	private PersonService ps;
+	private FireStationService fS;
 	
 	static int x;
 	
@@ -52,24 +53,24 @@ public class PersonControllerTest {
 
 	
 	@Test
-	public void testDeletePerson() throws Exception {
-		mockMvc.perform(delete("/person/"+x)).andExpect(status().isOk());
-	}
+	public void testDeleteFireStation() throws Exception {
+		mockMvc.perform(
+				delete("/firestation/"+ Mockito.anyInt())).andExpect(status().isOk());	}
 	
 	@Test
-	public void testGetPersons() throws Exception{
-		mockMvc.perform(get("/persons")).andExpect(status().isOk());
+	public void testGetFireStations() throws Exception{
+		mockMvc.perform(get("/firestation")).andExpect(status().isOk());
 	}
 	// Problème avec ce test, retourne un code 204 pcq il considère que p (de la méthode original est null)...
 	// Mais je me demande pourquoi pour le test d'une personne il fait ça mais pas quand il y a plusieurs personnnes...
 	
 	 @Test
 	 
-	public void testPostPerson() throws Exception{
+	public void testPostFireStation() throws Exception{
 		mockMvc.perform(
-				post("/person")
+				post("/firestation")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content("{\"firstName\":\"sqqsdf\", \"lastName\":\"Bogqfgqqyd\", \"address\":\"1509 Culver St\", \"zip\":\"97451\", \"phone\":\"841-874-6512\", \"email\":\"jaboyd@email.com\" }"))
+				.content("{\"adress\":\"sqqsdf\"}"))
 				//.content("{\""+Mockito.anyString()+"\"}"))
 		.andExpect(status().
 				isCreated());
@@ -77,12 +78,12 @@ public class PersonControllerTest {
 	}
 
 	@Test
-	public void testPostPersons() throws Exception{
+	public void testPostFireStations() throws Exception{
 		mockMvc.perform(
-				post("/persons")
+				post("/firestations")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content("[{\"firstName\":\"sqqsdf\", \"lastName\":\"Bogqfgqqyd\",\"city\":\"Culver\", \"zip\":\"97451\", \"phone\":\"841-874-6512\", \"email\":\"jaboyd@email.com\" },\n"
-						+ "{\"firstName\":\"sqqsdf\", \"lastName\":\"Bogqfgqqyd\", \"address\":\"1509 Culver St\", \"city\":\"Culver\", \"zip\":\"97451\", \"phone\":\"841-874-6512\", \"email\":\"jaboyd@email.com\" }]"))
+				.content("[{\"address\":\"sqqsdf\", \"station\":"+5+"},\n"
+						+ "{\"address\":\"rqzed\", \"station\":"+5+" }]"))
 				//.content("{\""+Mockito.anyString()+"\":\""+Mockito.anyString()+"\"}]"))
 		.andExpect(status().
 				isCreated());
@@ -90,11 +91,10 @@ public class PersonControllerTest {
 	}
 	
 	@Test
-	public void testPutPersons() throws Exception{
+	public void testPutFireStation() throws Exception{
 		mockMvc.perform(
-				put("/person/"+x)
-				.contentType(MediaType.APPLICATION_JSON)
-				.content("{\""+Mockito.anyString()+"\":\""+Mockito.anyString()+"\"}"))
+				put("/firestation").contentType(MediaType.APPLICATION_JSON)
+				.content("{\"adress\":\"sqqsdf\"}"))
 		.andExpect(status().isOk());
 				//put("/person/"+x).contentType(MediaType.JSON_UTF_8.subtype()).content(("{\"mykey\":\"myvalue\"}"))).andExpect(status().isOk());
 		// perform(post("/myapi").contentType(MediaType.APPLICATION_JSON).content("{\"mykey\":\"myvalue\"}"))   
@@ -104,30 +104,32 @@ public class PersonControllerTest {
 	//---------- Méthodes personalisées --------
 
 	@Test
-	public void testGetChildAlert() throws Exception{
-		mockMvc.perform(get("/childAlert").param("address",Mockito.anyString())).andExpect(status().isOk());
-	}
-	
-	@Test
-	public void testGetPhones() throws Exception{
-		mockMvc.perform(get("/phoneAlert").param("firestation",String.valueOf(x))).andExpect(status().isOk());
-	}
-	
-	@Test
-	public void testGetPersonInfo() throws Exception{
+	public void testGetPeople() throws Exception{
 		/*
 		 * LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
 		 * requestParams.add("firstName", "sfdsqg");
 		requestParams.add("lastName", "gfequi");
 		mockMvc.perform(get("/personInfo").params(requestParams)).andExpect(status().isOk());
 		 */
-		mockMvc.perform(get("/personInfo").param("firstName",Mockito.anyString()).param("lastName", Mockito.anyString())).andExpect(status().isOk());
+		mockMvc.perform(get("/firestation").param("stationNumber",String.valueOf(x))).andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testGetFireAlert() throws Exception{
+		mockMvc.perform(get("/fire").param("address",Mockito.anyString())).andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testGetFloodAlert() throws Exception{
+		/*
+		 * LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
+		 * requestParams.add("firstName", "sfdsqg");
+		requestParams.add("lastName", "gfequi");
+		mockMvc.perform(get("/personInfo").params(requestParams)).andExpect(status().isOk());
+		 */
+		mockMvc.perform(get("/flood/stations").param("stations",Mockito.anyString())).andExpect(status().isOk());
 	}
 
-	@Test
-	public void testGetEmail() throws Exception{
-		mockMvc.perform(get("/communityEmail").param("city", Mockito.anyString())).andExpect(status().isOk());
-	}
 	
 	// ---- Autre manière de tester 
 	//https://www.oodlestechnologies.com/blogs/how-to-unit-test-a-post-rest-service-using-mockito-with-junit/
