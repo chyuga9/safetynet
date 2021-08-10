@@ -59,7 +59,7 @@ public class MedicalRecordControllerTest {
 	@Test
 	public void testDeleteMedicalRecord() throws Exception {
 		mockMvc.perform(
-				delete("/medicalrecord/"+ Mockito.anyInt())).andExpect(status().isOk());	}
+				delete("/medicalrecord/"+ random)).andExpect(status().isOk());	}
 	
 	@Test
 	public void testGetMedicalRecords() throws Exception{
@@ -99,7 +99,7 @@ public class MedicalRecordControllerTest {
 		mockMvc.perform(
 				put("/medicalrecord/"+x)
 				.contentType(MediaType.APPLICATION_JSON)
-				.content("{\""+Mockito.anyString()+"\":\""+Mockito.anyString()+"\"}"))
+				.content("{\""+random+"\":\""+random+"\"}"))
 		.andExpect(status().isOk());
 				//put("/person/"+x).contentType(MediaType.JSON_UTF_8.subtype()).content(("{\"mykey\":\"myvalue\"}"))).andExpect(status().isOk());
 		// perform(post("/myapi").contentType(MediaType.APPLICATION_JSON).content("{\"mykey\":\"myvalue\"}"))   

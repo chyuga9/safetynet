@@ -36,7 +36,34 @@ public class MedicalRecord {
     @Column(name="last_name")
     private String lastName;
     
-    @Column(name = "id_bd")
+    public MedicalRecord(String firstName, String lastName, String idBd, Date birthdate, ArrayList<String> medications,
+			ArrayList<String> allergies, Person person) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.idBd = idBd;
+		this.birthdate = birthdate;
+		this.medications = medications;
+		this.allergies = allergies;
+		this.person = person;
+	}
+
+	public MedicalRecord(String firstName, String lastName, String idBd, Date birthdate, ArrayList<String> medications,
+			ArrayList<String> allergies) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.idBd = idBd;
+		this.birthdate = birthdate;
+		this.medications = medications;
+		this.allergies = allergies;
+	}
+
+	public MedicalRecord() {
+		super();
+	}
+
+	@Column(name = "id_bd")
     @JsonIgnore
     private String idBd;
     
