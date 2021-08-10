@@ -41,6 +41,8 @@ public class MedicalRecordControllerTest {
 	
 	static int x;
 	
+	String random = "random";
+	
 	//JSONObject json = Mockito.mock(JSONObject.class);
 	
 	//public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.JSON_UTF_8.type(), MediaType.JSON_UTF_8.subtype(), MediaType.JSON_UTF_8.parameters()); //
