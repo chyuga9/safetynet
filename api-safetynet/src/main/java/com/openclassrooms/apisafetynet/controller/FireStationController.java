@@ -24,6 +24,8 @@ import com.openclassrooms.apisafetynet.projection.FireAlert;
 import com.openclassrooms.apisafetynet.projection.People;
 import com.openclassrooms.apisafetynet.service.FireStationService;
 
+import javassist.NotFoundException;
+
 @RestController
 public class FireStationController {
 
@@ -34,7 +36,7 @@ public class FireStationController {
 	//---------- Méthodes de base --------
 	
 	@DeleteMapping("/firestation/{id}")
-	public ResponseEntity<String> deleteFireStation( @PathVariable int id) {
+	public ResponseEntity<String> deleteFireStation( @PathVariable int id) throws NotFoundException {
 		fireStationService.deleteFireStation((id));
 		return ResponseEntity.ok().body("Firestation deleted");
 	}

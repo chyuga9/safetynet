@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.openclassrooms.apisafetynet.exceptions.UnfindablePersonException;
 import com.openclassrooms.apisafetynet.model.MedicalRecord;
 import com.openclassrooms.apisafetynet.model.Person;
 import com.openclassrooms.apisafetynet.service.MedicalRecordService;
 import com.openclassrooms.apisafetynet.service.PersonService;
+
+import javassist.NotFoundException;
 
 @RestController
 public class MedicalRecordController {
@@ -37,12 +40,12 @@ public class MedicalRecordController {
 	}
 	*/
 	@PostMapping("/medicalrecord")
-	public ResponseEntity<MedicalRecord> createMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+	public ResponseEntity<MedicalRecord> createMedicalRecord(@RequestBody MedicalRecord medicalRecord) throws UnfindablePersonException {
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(medicalRecord.getId()).toUri();
 		return ResponseEntity.created(location).body(medicalRecordService.createMedicalRecord(medicalRecord));
 	}
 	@PostMapping("/medicalrecords")
-	public ResponseEntity<Iterable<MedicalRecord>> createMedicalRecords(@RequestBody Iterable<MedicalRecord> medicalRecords) {
+	public ResponseEntity<Iterable<MedicalRecord>> createMedicalRecords(@RequestBody Iterable<MedicalRecord> medicalRecords) throws UnfindablePersonException {
 		URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/packdemedicalrecord").build(false).toUri();
         return ResponseEntity.created(location).body(medicalRecordService.createMedicalRecords(medicalRecords));
@@ -54,7 +57,7 @@ public class MedicalRecordController {
 		return medicalRecordService.updateMedicalRecord(idDb,medicalRecord);
 	}
     @DeleteMapping("/medicalrecord/{id_bd}")
-    public ResponseEntity<String> deleteMedicalRecord(@PathVariable("id_bd") String idDb) {
+    public ResponseEntity<String> deleteMedicalRecord(@PathVariable("id_bd") String idDb) throws NotFoundException {
     	medicalRecordService.deleteMedicalRecord(idDb);
     	return ResponseEntity.ok().body("Medical Record deleted");
     }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.openclassrooms.apisafetynet.exceptions.UnfindablePersonException;
@@ -48,10 +49,7 @@ public class PersonController {
 
 
     @DeleteMapping("/person/{id_bd}")
-    public ResponseEntity<String> deletePerson(@PathVariable("id_bd") String idDb) {
-    	// Possibilité 1 de gérer une exception
-    	Optional<Person> person = personService.getPerson(idDb);
-    	if(person == null ) throw new UnfindablePersonException("La personne avec l'id " + idDb + " est INTROUVABLE.");
+    public ResponseEntity<String> deletePerson(@PathVariable("id_bd") String idDb) throws UnfindablePersonException{
         personService.deletePerson(idDb);
         return ResponseEntity.ok().body("Person deleted");
     }

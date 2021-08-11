@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.apisafetynet.ApiSafetynetApplication;
+import com.openclassrooms.apisafetynet.exceptions.UnfindablePersonException;
 import com.openclassrooms.apisafetynet.model.FireStation;
 import com.openclassrooms.apisafetynet.model.MedicalRecord;
 import com.openclassrooms.apisafetynet.model.PeopleAndCount;
@@ -22,11 +23,12 @@ import com.openclassrooms.apisafetynet.projection.People;
 import com.openclassrooms.apisafetynet.repository.FireStationsRepository;
 import com.openclassrooms.apisafetynet.repository.PersonsRepository;
 
+import javassist.NotFoundException;
 import lombok.Data;
 
 @Data
 @Service
-public class FireStationService<U> {
+public class FireStationService {
 
     @Autowired
     private FireStationsRepository fireStationRepository;
@@ -39,15 +41,20 @@ public class FireStationService<U> {
 
 	//---------- Méthodes de base --------
 
-    public void deleteFireStation(int id) {
+    public boolean deleteFireStation(int id) throws NotFoundException {
     	Optional<FireStation> deletedFireStation = fireStationRepository.findById(id);
+    	if(deletedFireStation.isEmpty()) 
+    		throw new NotFoundException("Aucune personne n'a été trouvée avec l'id " + id);
     	String address = deletedFireStation.get().getAddress();
     	fireStationRepository.delete(deletedFireStation.get());
         logger.info("Suppression de la caserne s'occupant de l'adresse " + address);
+        return true;
     }
     
-    public Optional<FireStation> getFireStation(final String address) {
+    public Optional<FireStation> getFireStation(final String address) throws NotFoundException {
         logger.info("Recherche la caserne s'occupant de l'adresse " + address);
+        if(fireStationRepository.findByAddress(address).isEmpty()) 
+    		throw new NotFoundException("Aucune firestation n'a été trouvée avec l'adresse " + address);
         return fireStationRepository.findByAddress(address);
     }
 

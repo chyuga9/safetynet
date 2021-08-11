@@ -57,6 +57,7 @@ public class FireStationControllerTest {
 		mockMvc.perform(
 				delete("/firestation/"+ Mockito.anyInt())).andExpect(status().isOk());	}
 	
+	
 	@Test
 	public void testGetFireStations() throws Exception{
 		mockMvc.perform(get("/firestation")).andExpect(status().isOk());

@@ -29,6 +29,7 @@ public interface PersonsRepository extends CrudRepository<Person, Integer> {
 	//@Query(value = "SELECT p.phone FROM persons p LEFT JOIN firestations f ON p.address = f.address WHERE f.station = ?1")
 	<T>Iterable<T> findByFireStation_Station(int station,Class<T> type);
 	Iterable<PersonInfo> findByLastName(String lastName);
+	//Person findByLastName(String lastName, Person.class);
 	Iterable<Email> findByCity(String city);
 	int countByFireStation_StationAndMedicalRecord_BirthdateBefore(int station, Date date);
 	int countByFireStation_StationAndMedicalRecord_BirthdateAfter(int station, Date date);

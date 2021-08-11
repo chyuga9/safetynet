@@ -63,7 +63,6 @@
 		<dependency>
     <groupId>javax.persistence</groupId>
     <artifactId>javax.persistence-api</artifactId>
-    <version>2.2</version>
 </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -83,6 +82,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
     <groupId>org.hibernate.javax.persistence</groupId>
@@ -94,24 +99,40 @@
   <artifactId>genson</artifactId>
   <version>1.6</version>
 </dependency>
+
 <dependency>
     <groupId>com.h2database</groupId>
     <artifactId>h2</artifactId>
     <scope>test</scope>
 </dependency>
+
 <dependency>
     <groupId>com.jayway.jsonpath</groupId>
     <artifactId>json-path</artifactId>
     <version>2.4.0</version>
 </dependency>
-<!--
+
   <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- 
+          <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>${junit-platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+         
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <version>5.3.2</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        -->
+    <!--    <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.3.2</version>
@@ -133,6 +154,16 @@
 	</dependencies>
 
 	<build>
+	 <resources>
+            <resource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -148,7 +179,7 @@
 			</plugin>
 		
 		
-		<plugin>
+		<!-- <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.21.0</version>
@@ -181,7 +212,17 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin> -->
+            <plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-site-plugin</artifactId>
+  <version>3.7.1</version>
+</plugin>
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-project-info-reports-plugin</artifactId>
+  <version>3.0.0</version>
+</plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>

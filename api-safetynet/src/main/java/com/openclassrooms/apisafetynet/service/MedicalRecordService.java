@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.apisafetynet.ApiSafetynetApplication;
+import com.openclassrooms.apisafetynet.exceptions.UnfindablePersonException;
 import com.openclassrooms.apisafetynet.model.MedicalRecord;
 import com.openclassrooms.apisafetynet.model.Person;
 import com.openclassrooms.apisafetynet.repository.MedicalRecordsRepository;
 import com.openclassrooms.apisafetynet.repository.PersonsRepository;
 
+import javassist.NotFoundException;
 import lombok.Data;
 
 @Data
@@ -30,8 +32,16 @@ public class MedicalRecordService {
     
     private static final Logger logger = LogManager.getLogger(ApiSafetynetApplication.class);
 
-
-    public Optional<MedicalRecord> getMedicalRecord(final String idDb) {
+    public boolean deleteMedicalRecord(final String idDb) throws NotFoundException {
+		if(medicalRecordsRepository.findById(idDb).isEmpty()) 
+    		throw new NotFoundException("Aucun medical record n'a été trouvé avec l'id " + idDb);
+    	medicalRecordsRepository.deleteById(idDb);
+    	return true;
+    }
+  
+    public Optional<MedicalRecord> getMedicalRecord(final String idDb) throws NotFoundException {
+    	if(medicalRecordsRepository.findById(idDb).isEmpty()) 
+    		throw new NotFoundException("Aucun medical record n'a été trouvé avec l'id " + idDb);
         return medicalRecordsRepository.findById(idDb);
     }
 
@@ -39,36 +49,40 @@ public class MedicalRecordService {
         return medicalRecordsRepository.findAll();
     }
     
-    public MedicalRecord createMedicalRecord(MedicalRecord medicalRecord) {
-    	String idBd = medicalRecord.getFirstName() + "_" + medicalRecord.getLastName();
-    	medicalRecord.setIdBd(idBd);
-    	/*
-    	String pers_id =medicalRecordsRepository.findByIdDb(medicalRecord.getIdBd());
-    	if(!pers_id.isEmpty()) {
-    		medicalRecordsRepository.createRowInJointTable(idBd, pers_id);
-    	};    	*/
-    	MedicalRecord savedMedicalRecord= medicalRecordsRepository.save(medicalRecord);
-    	personService.updateMedicalRecordsPerson(idBd,savedMedicalRecord);
+    public MedicalRecord createMedicalRecord(MedicalRecord medicalRecord) throws UnfindablePersonException {
+		
+			String idBd = medicalRecord.getFirstName() + "_" + medicalRecord.getLastName();
+			medicalRecord.setIdBd(idBd);
+			/*
+			String pers_id =medicalRecordsRepository.findByIdDb(medicalRecord.getIdBd());
+			if(!pers_id.isEmpty()) {
+				medicalRecordsRepository.createRowInJointTable(idBd, pers_id);
+			};    	*/
+			MedicalRecord savedMedicalRecord= medicalRecordsRepository.save(medicalRecord);
+			try{personService.updateMedicalRecordsPerson(idBd,savedMedicalRecord);}
+			catch(UnfindablePersonException e){throw new UnfindablePersonException("Le medical record n'a été rattaché à personne car l'identifiant est inconnu");}
    
-        return savedMedicalRecord;
-        
-	
-	}
+		    return savedMedicalRecord;
+		    
+		
+		}
     // Pour rentrer les données plus vite pour moi
-    public Iterable<MedicalRecord> createMedicalRecords(Iterable<MedicalRecord> medicalRecords) {
-    	for(MedicalRecord medRec : medicalRecords) {
-    	String idBd = medRec.getFirstName() + "_" +  medRec.getLastName();
-    	medRec.setIdBd(idBd);
-    	medicalRecordsRepository.save(medRec);
-    	personService.updateMedicalRecordsPerson(idBd,medRec);
-        logger.info("Mise à jour réussie du dossier médical de " + medRec.getFirstName() + " " + medRec.getLastName());
-    	}
+    public Iterable<MedicalRecord> createMedicalRecords(Iterable<MedicalRecord> medicalRecords) throws UnfindablePersonException {
+    	try {
+			for(MedicalRecord medRec : medicalRecords) {
+			String idBd = medRec.getFirstName() + "_" +  medRec.getLastName();
+			medRec.setIdBd(idBd);
+			medicalRecordsRepository.save(medRec);
+			personService.updateMedicalRecordsPerson(idBd,medRec);
+			logger.info("Mise à jour réussie du dossier médical de " + medRec.getFirstName() + " " + medRec.getLastName());
+			}
+		} catch(UnfindablePersonException e){throw new UnfindablePersonException("Le medical record n'a été rattaché à personne car l'identifiant est inconnu");}
     	
     	 return medicalRecords;
         }
     
 	public MedicalRecord updateMedicalRecord(String idDb, MedicalRecord medicalRecord) {
-		Optional<MedicalRecord> updatedMedicalRecord = medicalRecordsRepository.findById(idDb);
+		Optional<MedicalRecord> updatedMedicalRecord = medicalRecordsRepository.findByIdBd(idDb);
     	ArrayList<String> medication = medicalRecord.getMedications();
     	ArrayList<String> allergie = medicalRecord.getAllergies();
     	Date birthdate = medicalRecord.getBirthdate();
@@ -85,6 +99,4 @@ public class MedicalRecordService {
     	return medicalRecordsRepository.save(updatedMedicalRecord.get());
         }
 	
-	public void deleteMedicalRecord(final String idDb) {
-    	medicalRecordsRepository.deleteById(idDb);
-    }}
+	}

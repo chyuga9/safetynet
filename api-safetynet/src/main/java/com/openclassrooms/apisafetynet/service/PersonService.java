@@ -20,9 +20,11 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jayway.jsonpath.internal.function.text.Concatenate;
 import com.openclassrooms.apisafetynet.ApiSafetynetApplication;
 import com.openclassrooms.apisafetynet.conversion.PersonConversion;
 import com.openclassrooms.apisafetynet.dto.PersonDto;
+import com.openclassrooms.apisafetynet.exceptions.UnfindablePersonException;
 import com.openclassrooms.apisafetynet.model.ChildAlertAndFamily;
 import com.openclassrooms.apisafetynet.model.FireStation;
 import com.openclassrooms.apisafetynet.model.MedicalRecord;
@@ -52,14 +54,20 @@ public class PersonService {
     
 	//---------- Méthodes de base --------
 
-    public void deletePerson(final String idDb) {
-    	System.out.println("Est ce que ca marche ?");
-    	Optional<Person> p = personsRepository.deleteByIdDb(idDb);
-        logger.info(p.get().getFirstName() + p.get().getLastName() + " a été supprimé de la base de données");
+    public boolean deletePerson(final String idDb) throws UnfindablePersonException {
+    	//Optional<Person> pers = personsRepository.findByIdDb(idDb);
+    	if(personsRepository.findByIdDb(idDb).isEmpty()) 
+    		throw new UnfindablePersonException("Aucune personne n'a été trouvée avec l'id " + idDb);
+    	personsRepository.deleteByIdDb(idDb);
+    	String[] fullName = idDb.split("_");
+        logger.info(fullName[0]+ " " + fullName[1] +  " a été supprimé de la base de données");
+        return true;
     }
     
-    public Optional<Person> getPerson(final String idDb) {
-        logger.info("Recherche de la personne avec l'identifiant " + idDb);
+    public Optional<Person> getPerson(final String idDb) throws UnfindablePersonException {
+    	if(personsRepository.findByIdDb(idDb).isEmpty()) 
+    		throw new UnfindablePersonException("Aucune personne n'a été trouvée avec l'id " + idDb);
+    	logger.info("Recherche de la personne avec l'identifiant " + idDb);
         return personsRepository.findByIdDb(idDb);
     }
 
@@ -99,11 +107,11 @@ public class PersonService {
     	String email = person.getEmail();
     	String phone = person.getPhone();
     	String zip = person.getZip();
-    	if(address != null) {updatedPerson.get().setAddress(address);}
-    	if(city != null) {updatedPerson.get().setCity(city);}
-    	if(email != null) {updatedPerson.get().setEmail(email);}
-    	if(phone != null) {updatedPerson.get().setPhone(phone);}
-    	if(zip != null ) {updatedPerson.get().setZip(zip);}
+    	if(address != null) updatedPerson.get().setAddress(address);
+    	if(city != null) updatedPerson.get().setCity(city);
+    	if(email != null) updatedPerson.get().setEmail(email);
+    	if(phone != null) updatedPerson.get().setPhone(phone);
+    	if(zip != null ) updatedPerson.get().setZip(zip);
         logger.info("Mise à jour réussie du dossier de " + updatedPerson.get().getFirstName() + " " + updatedPerson.get().getLastName());
     	return personsRepository.save(updatedPerson.get());
         }
@@ -153,8 +161,10 @@ public Iterable<Person> getAddressesByStationNumber(String station) {
 	Iterable<Person> persons = manager.createNamedQuery("Persons", Person.class).getResultList();
 	return persons;
 	}*/
-	public Person updateMedicalRecordsPerson(String idBd, MedicalRecord medicalRecord) {
+	public Person updateMedicalRecordsPerson(String idBd, MedicalRecord medicalRecord) throws UnfindablePersonException {
 		Optional<Person> person = personsRepository.findByIdDb(idBd);
+		if(person.isEmpty()) 
+    		throw new UnfindablePersonException("Aucune personne n'a été trouvée avec l'id " + idBd);
     	person.get().setMedicalRecord(medicalRecord);
     	return personsRepository.save(person.get());
 	}
