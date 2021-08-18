@@ -36,8 +36,8 @@ public class MedicalRecord {
     @Column(name="last_name")
     private String lastName;
     
-    public MedicalRecord(String firstName, String lastName, String idBd, Date birthdate, ArrayList<String> medications,
-			ArrayList<String> allergies, Person person) {
+    public MedicalRecord(String firstName, String lastName, String idBd, Date birthdate, String medications,
+    		String allergies, Person person) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -48,8 +48,8 @@ public class MedicalRecord {
 		this.person = person;
 	}
 
-	public MedicalRecord(String firstName, String lastName, String idBd, Date birthdate, ArrayList<String> medications,
-			ArrayList<String> allergies) {
+	public MedicalRecord(String firstName, String lastName, String idBd, Date birthdate, String medications,
+			String allergies) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -74,9 +74,9 @@ public class MedicalRecord {
 	@JsonFormat(pattern="MM/dd/yyyy")
 	private Date birthdate;
 	
-	private ArrayList<String> medications;
+	private String medications;
 	
-	private ArrayList<String> allergies;
+	private String allergies;
 	
 	@OneToOne
 	@JsonIgnore
