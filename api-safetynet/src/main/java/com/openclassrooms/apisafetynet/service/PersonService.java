@@ -22,8 +22,6 @@ import org.springframework.stereotype.Service;
 
 import com.jayway.jsonpath.internal.function.text.Concatenate;
 import com.openclassrooms.apisafetynet.ApiSafetynetApplication;
-import com.openclassrooms.apisafetynet.conversion.PersonConversion;
-import com.openclassrooms.apisafetynet.dto.PersonDto;
 import com.openclassrooms.apisafetynet.exceptions.UnfindablePersonException;
 import com.openclassrooms.apisafetynet.model.ChildAlertAndFamily;
 import com.openclassrooms.apisafetynet.model.FireStation;
@@ -33,6 +31,7 @@ import com.openclassrooms.apisafetynet.projection.ChildAlert;
 import com.openclassrooms.apisafetynet.projection.Email;
 import com.openclassrooms.apisafetynet.projection.PersonInfo;
 import com.openclassrooms.apisafetynet.projection.PhoneAlert;
+import com.openclassrooms.apisafetynet.repository.FireStationsRepository;
 import com.openclassrooms.apisafetynet.repository.PersonsRepository;
 
 import lombok.Data;
@@ -44,6 +43,9 @@ public class PersonService {
 
     @Autowired
     private PersonsRepository personsRepository;
+    
+    @Autowired
+    private FireStationsRepository fsRepository;
     
     //@PersistenceContext
     //private EntityManager manager;
@@ -79,6 +81,9 @@ public class PersonService {
     public Person savePerson(Person person) {	
     	String id_bd = person.getFirstName() + "_" + person.getLastName();
     	person.setIdDb(id_bd);
+    	if(fsRepository.findByAddress(person.getAddress()).isPresent()) 
+    		person.setFireStation(fsRepository.findByAddress(person.getAddress()).get());
+    	
         Person savedPerson = personsRepository.save(person);
         logger.info("Enregistrement de " + person.getFirstName() + " " + person.getLastName() + " dans la base de données ");
         return savedPerson;

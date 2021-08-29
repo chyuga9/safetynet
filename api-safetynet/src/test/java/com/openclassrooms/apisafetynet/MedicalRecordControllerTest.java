@@ -63,7 +63,7 @@ public class MedicalRecordControllerTest {
 	
 	@Test
 	public void testGetMedicalRecords() throws Exception{
-		mockMvc.perform(get("/medicalrecord")).andExpect(status().isOk());
+		mockMvc.perform(get("/medicalrecords")).andExpect(status().isOk());
 	}
 	// Problème avec ce test, retourne un code 204 pcq il considère que p (de la méthode original est null)...
 	// Mais je me demande pourquoi pour le test d'une personne il fait ça mais pas quand il y a plusieurs personnnes...

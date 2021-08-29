@@ -33,16 +33,16 @@ public class MedicalRecordService {
     private static final Logger logger = LogManager.getLogger(ApiSafetynetApplication.class);
 
     public boolean deleteMedicalRecord(final String idDb) throws NotFoundException {
-		if(medicalRecordsRepository.findById(idDb).isEmpty()) 
+		if(medicalRecordsRepository.findByIdBd(idDb).isEmpty()) 
     		throw new NotFoundException("Aucun medical record n'a été trouvé avec l'id " + idDb);
-    	medicalRecordsRepository.deleteById(idDb);
+    	medicalRecordsRepository.deleteByIdBd(idDb);
     	return true;
     }
   
     public Optional<MedicalRecord> getMedicalRecord(final String idDb) throws NotFoundException {
-    	if(medicalRecordsRepository.findById(idDb).isEmpty()) 
+    	if(medicalRecordsRepository.findByIdBd(idDb).isEmpty()) 
     		throw new NotFoundException("Aucun medical record n'a été trouvé avec l'id " + idDb);
-        return medicalRecordsRepository.findById(idDb);
+        return medicalRecordsRepository.findByIdBd(idDb);
     }
 
     public Iterable<MedicalRecord> getMedicalRecords() {
@@ -60,9 +60,10 @@ public class MedicalRecordService {
 			};    	*/
 			MedicalRecord savedMedicalRecord= medicalRecordsRepository.save(medicalRecord);
 			try{personService.updateMedicalRecordsPerson(idBd,savedMedicalRecord);}
-			catch(UnfindablePersonException e){throw new UnfindablePersonException("Le medical record n'a été rattaché à personne car l'identifiant est inconnu");}
-   
-		    return savedMedicalRecord;
+			catch(UnfindablePersonException e){
+				throw new UnfindablePersonException("Le medical record n'a été rattaché à personne car l'identifiant est inconnu");}
+			finally {return savedMedicalRecord;}
+		    
 		    
 		
 		}
@@ -77,14 +78,15 @@ public class MedicalRecordService {
 			logger.info("Mise à jour réussie du dossier médical de " + medRec.getFirstName() + " " + medRec.getLastName());
 			}
 		} catch(UnfindablePersonException e){throw new UnfindablePersonException("Le medical record n'a été rattaché à personne car l'identifiant est inconnu");}
-    	
+    	finally {
     	 return medicalRecords;
+    	}
         }
     
 	public MedicalRecord updateMedicalRecord(String idDb, MedicalRecord medicalRecord) {
 		Optional<MedicalRecord> updatedMedicalRecord = medicalRecordsRepository.findByIdBd(idDb);
-    	ArrayList<String> medication = medicalRecord.getMedications();
-    	ArrayList<String> allergie = medicalRecord.getAllergies();
+    	String medication = medicalRecord.getMedications();
+    	String allergie = medicalRecord.getAllergies();
     	Date birthdate = medicalRecord.getBirthdate();
     	if(birthdate != null) {
     		updatedMedicalRecord.get().setBirthdate(birthdate);}

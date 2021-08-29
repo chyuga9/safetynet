@@ -1,10 +1,21 @@
+--Il ne faut pas mettre de double quotes ("") sinon il y a un problème avec les données
+
 
 INSERT INTO persons (first_name, last_name, id_db, address, city, zip, phone, email) VALUES
-		('John', 'Boyd', 'John_Boyd', '1509 Culver St', 'Culver', '97451', '841-874-6512', 'jaboyd@email.com') ,
+		('John', 'Boyd', 'John_Boyd', '1509 Culver St', 'Culver', '97451', '841-874-6512', 'jaboyd@email.com'),
+		
         ('Jacob', 'Boyd', 'Jacob_Boyd','1509 Culver St', 'Culver', '97451', '841-874-6513', 'drk@email.com' ),
         ('Tenley', 'Boyd','Tenley_Boyd', '1509 Culver St', 'Culver', '97451', '841-874-6512', 'tenz@email.com') ,
         ('Roger', 'Boyd','Roger_Boyd', '1509 Culver St', 'Culver', '97451', '841-874-6512', 'jaboyd@email.com') ,
-   
+        ('Felicia', 'Boyd','Felicia_Boyd', '1509 Culver St', 'Culver', '97451', '841-874-6544', 'jaboyd@email.com') ,
+        ('Jonanathan', 'Marrack','Jonanathan_Marrack', '29 15th St', 'Culver', '97451', '841-874-6513', 'drk@email.com' ),
+        ('Tessa', 'Carman','Tessa_Carman', '834 Binoc Ave', 'Culver', '97451', '841-874-6512', 'tenz@email.com' ),
+        ('Peter', 'Duncan','Peter_Duncan', '644 Gershwin Cir', 'Culver', '97451', '841-874-6512', 'jaboyd@email.com') ,
+        ('Foster', 'Shepard', 'Foster_Shepard','748 Townings Dr', 'Culver', '97451', '841-874-6544', 'jaboyd@email.com') ,
+        ('Tony', 'Cooper','Tony_Cooper', '112 Steppes Pl', 'Culver', '97451', '841-874-6874', 'tcoop@ymail.com') ,
+        ('Lily', 'Cooper','Lily_Cooper','489 Manchester St', 'Culver', '97451', '841-874-9845', 'lily@email.com') ,
+        ('Sophia', 'Zemicks','Sophia_Zemicks',  '892 Downing Ct', 'Culver', '97451', '841-874-7878', 'soph@email.com' ),
+        ('Warren', 'Zemicks','Warren_Zemicks', '892 Downing Ct', 'Culver', '97451', '841-874-7512', 'ward@email.com' ),
         ('Zach', 'Zemicks','Zach_Zemicks', '892 Downing Ct', 'Culver', '97451', '841-874-7512', 'zarc@email.com' ),
         ('Reginold', 'Walker', 'Reginold_Walker','908 73rd St', 'Culver', '97451', '841-874-8547', 'reg@email.com' ),
         ('Jamie', 'Peters','Jamie_Peters', '908 73rd St', 'Culver', '97451', '841-874-7462', 'jpeter@email.com' ),
@@ -15,7 +26,6 @@ INSERT INTO persons (first_name, last_name, id_db, address, city, zip, phone, em
         ('Kendrik', 'Stelzer','Kendrick_Stelzer', '947 E. Rose Dr', 'Culver', '97451', '841-874-7784', 'bstel@email.com' ),
         ('Clive', 'Ferguson','Clive_Ferguson', '748 Townings Dr', 'Culver', '97451', '841-874-6741', 'clivfd@ymail.com' ),
         ('Eric', 'Cadigan', 'Eric_Cadigan','951 LoneTree Rd', 'Culver', '97451', '841-874-7458', 'gramps@email.com' );
-        
 
 INSERT INTO firestations (address, station) VALUES
 		( '1509 Culver St', '3' ),
@@ -30,9 +40,9 @@ INSERT INTO firestations (address, station) VALUES
         ( '112 Steppes Pl', '4' ),
         ( '947 E. Rose Dr', '1' ),
         ( '748 Townings Dr', '3' ),
-        ( '951 LoneTree Rd', '2' );
-
-
+        ( '951 LoneTree Rd', '2' );              		
+              		
+              		
    INSERT INTO medicalrecords (first_name, last_name, id_bd, birthdate, medications, allergies) VALUES
   ( 'John', 'Boyd','John_Boyd', TO_DATE('03-06-1989','MM-dd-yyyy'), 'aznol:350mg, hydrapermazol:100mg', 'nillacilan' ),
 

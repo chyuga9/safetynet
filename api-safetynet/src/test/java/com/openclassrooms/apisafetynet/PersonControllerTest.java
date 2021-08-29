@@ -49,7 +49,6 @@ import com.openclassrooms.apisafetynet.service.PersonService;
  * https://spring.io/guides/gs/testing-web/
  * Donne des exemples pour faire des testes de controller
  */
-//@TestPropertySource(		  locations = "classpath:application-test.properties")
 @WebMvcTest(controllers = PersonController.class)
 public class PersonControllerTest {
 
@@ -59,7 +58,7 @@ public class PersonControllerTest {
 	@MockBean
 	private PersonService ps;
 	
-	static int x;
+	 static int x;
 	
 	//JSONObject json = Mockito.mock(JSONObject.class);
 	
@@ -67,7 +66,7 @@ public class PersonControllerTest {
 	//public static final MediaType APPLICATION_JSON_UTF82 = new MediaType(null, null, null);
 	
 	@BeforeAll
-	static public void setup() {
+	 static public void setup() {
 		x = (int) (Math.random()*((10-1)+1))+1; // nombre entier au hasard - double x = (int)(Math.random()*((max-min)+1))+min;
 	}
 		
@@ -141,12 +140,16 @@ public class PersonControllerTest {
 
 	@Test
 	public void testGetChildAlert() throws Exception{
-		mockMvc.perform(get("/childAlert").param("address",Mockito.anyString())).andExpect(status().isOk());
+		mockMvc.perform(get("/childAlert")
+				.param("address",Mockito.anyString()))
+		.andExpect(status().isOk());
 	}
 	
 	@Test
 	public void testGetPhones() throws Exception{
-		mockMvc.perform(get("/phoneAlert").param("firestation",String.valueOf(x))).andExpect(status().isOk());
+		mockMvc.perform(get("/phoneAlert")
+				.param("firestation",String.valueOf(x)))
+		.andExpect(status().isOk());
 	}
 	
 	@Test
@@ -157,12 +160,17 @@ public class PersonControllerTest {
 		requestParams.add("lastName", "gfequi");
 		mockMvc.perform(get("/personInfo").params(requestParams)).andExpect(status().isOk());
 		 */
-		mockMvc.perform(get("/personInfo").param("firstName",Mockito.anyString()).param("lastName", Mockito.anyString())).andExpect(status().isOk());
+		mockMvc.perform(get("/personInfo")
+				.param("firstName",Mockito.anyString())
+				.param("lastName", Mockito.anyString()))
+		.andExpect(status().isOk());
 	}
 
 	@Test
 	public void testGetEmail() throws Exception{
-		mockMvc.perform(get("/communityEmail").param("city", Mockito.anyString())).andExpect(status().isOk());
+		mockMvc.perform(get("/communityEmail")
+				.param("city", Mockito.anyString()))
+		.andExpect(status().isOk());
 	}
 	
 	// ---- Autre manière de tester 

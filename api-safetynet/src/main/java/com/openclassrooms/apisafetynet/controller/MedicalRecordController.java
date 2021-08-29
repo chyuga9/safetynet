@@ -29,7 +29,7 @@ public class MedicalRecordController {
 	@Autowired
 	private MedicalRecordService medicalRecordService;
 	
-	@GetMapping("/medicalrecord")
+	@GetMapping("/medicalrecords")
     public ResponseEntity<Iterable<MedicalRecord>> getMedicalRecords() {
         return ResponseEntity.ok().body(medicalRecordService.getMedicalRecords());
     }
@@ -42,6 +42,7 @@ public class MedicalRecordController {
 	@PostMapping("/medicalrecord")
 	public ResponseEntity<MedicalRecord> createMedicalRecord(@RequestBody MedicalRecord medicalRecord) throws UnfindablePersonException {
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(medicalRecord.getId()).toUri();
+		
 		return ResponseEntity.created(location).body(medicalRecordService.createMedicalRecord(medicalRecord));
 	}
 	@PostMapping("/medicalrecords")

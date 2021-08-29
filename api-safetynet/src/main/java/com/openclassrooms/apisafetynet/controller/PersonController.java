@@ -25,6 +25,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.openclassrooms.apisafetynet.exceptions.UnfindablePersonException;
 import com.openclassrooms.apisafetynet.model.ChildAlertAndFamily;
+import com.openclassrooms.apisafetynet.model.FireStation;
 import com.openclassrooms.apisafetynet.model.MedicalRecord;
 import com.openclassrooms.apisafetynet.model.Person;
 import com.openclassrooms.apisafetynet.projection.ChildAlert;
@@ -42,8 +43,6 @@ public class PersonController {
     private PersonService personService;
     
     
-    private ResponseEntity<Void> response;
-
 
 	//---------- Méthodes de base --------
 
@@ -98,19 +97,22 @@ public class PersonController {
         		.body(p);
     }
     @PostMapping("/persons")
-    public ResponseEntity<Void> createPersons(@RequestBody Iterable<Person> persons) {
+    public ResponseEntity<Iterable<Person>> createPersons(@RequestBody Iterable<Person> persons) {
     	Iterable<Person> p = personService.savePersons(persons);
         if (p == null)
             return ResponseEntity.noContent().build();
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/packdeperson").build(false).toUri();
         
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(p);
     }
     
     @PutMapping("/person/{id_db}")
-    public Person updatePerson(@PathVariable("id_db") String idDb, @RequestBody Person person) {
-        return personService.updatePerson(idDb,person);
+    public ResponseEntity<Person> updatePerson(@PathVariable("id_db") String idDb, @RequestBody Person person) {
+        Person p = personService.updatePerson(idDb,person);
+        return  ResponseEntity.ok()
+        		.body(p);
+        
     }
    
 	//---------- Méthodes personalisées --------

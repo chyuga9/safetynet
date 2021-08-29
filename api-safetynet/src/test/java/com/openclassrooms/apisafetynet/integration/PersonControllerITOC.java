@@ -44,7 +44,7 @@ import com.openclassrooms.apisafetynet.service.PersonService;
 //--------------       https://zetcode.com/springboot/datajpatest/
 
 
-@SpringBootTest //(webEnvironment = WebEnvironment.DEFINED_PORT)
+@SpringBootTest (webEnvironment = WebEnvironment.DEFINED_PORT)
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase // A la place de DataJpaTest qui rentre en collision avec SpringBootTest
 @AutoConfigureTestEntityManager // Afin de persist les données avant chaque test
@@ -52,6 +52,9 @@ import com.openclassrooms.apisafetynet.service.PersonService;
 @TestPropertySource("classpath:application-test.properties")
 
 public class PersonControllerITOC {
+	
+	@LocalServerPort
+	int port;
 	
 	@Autowired
 	private MockMvc mockMvc;
@@ -70,6 +73,7 @@ public class PersonControllerITOC {
 	 public void setUp() {
 		person.setIdDb(idDb);
 		entityManager.persist(person);
+		System.out.println("port n° " + port);
 	}
 	
 	@AfterEach
@@ -133,7 +137,8 @@ public class PersonControllerITOC {
 		assertThat(result.getResponse().getContentAsString())
 				.contains("city\":\"kilm");
 	}
-	@Disabled // Problème pour rentrer les medicalrecords dans la base de données H2, problème pour les arraylist et les dates, mauvais type apparemment + surement probleme clé etrangere
+	@Disabled  //Problème pour rentrer les medicalrecords dans la base de données H2, problème pour les arraylist et les dates, mauvais type apparemment + surement probleme clé etrangere
+	// Necessite les informations des autres tables qui ne sont pas disponibles car je n'arrive pas à lier les tables entre elles grâce aux clés étrangères
 	@Test
 	public void givenWeWantToCheckAllTheChildrenLivingInAAdress_whenWeEnterAnAddress_thenTheChildrenwithTheirFamilyAreDisplayed() throws Exception {
 		MvcResult result = mockMvc.perform(get("/childAlert")
@@ -149,6 +154,7 @@ public class PersonControllerITOC {
 	}
 	
 	@Disabled // Problème pour rentrer les medicalrecords dans la base de données H2, problème pour les arraylist et les dates
+	// Necessite les informations des autres tables qui ne sont pas disponibles car je n'arrive pas à lier les tables entre elles grâce aux clés étrangères
 	@Test
 	public void givenWeWantAllThePhonesOfPersonCaringByAFireStation_whenWeEnterAFireStationStation_thenAllThePhonesAreReturned() throws Exception {
 	MvcResult result = mockMvc.perform(get("/phoneAlert")
@@ -156,8 +162,12 @@ public class PersonControllerITOC {
 	.andDo(print())
 	.andExpect(status().isOk())
 	.andReturn();
+	
+	assertThat(result.getResponse().getContentAsString())
+	.contains("841-874-6512");
+	
 }
-	@Disabled // Necessite les informations des autres tables
+	@Disabled // Necessite les informations des autres tables qui ne sont pas disponibles car je n'arrive pas à lier les tables entre elles grâce aux clés étrangères
 	@Test
 	public void givenWeWantAllThePersonsInformations_whenWeEnterInParametersFirstNameAndLastName_thenAllTheInformationsAreReturned() throws Exception {
 		MvcResult result = mockMvc.perform(get("/personInfo")
@@ -166,6 +176,9 @@ public class PersonControllerITOC {
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andReturn();
+		
+		assertThat(result.getResponse().getContentAsString())
+		.contains("841-874-8547");
 	}
 	
 	@Test
