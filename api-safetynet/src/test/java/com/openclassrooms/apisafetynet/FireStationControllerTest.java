@@ -28,6 +28,9 @@ import org.springframework.http.MediaType;
 import com.openclassrooms.apisafetynet.controller.FireStationController;
 import com.openclassrooms.apisafetynet.service.FireStationService;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
+
 @WebMvcTest(controllers = FireStationController.class)
 public class FireStationControllerTest {
 
@@ -51,6 +54,12 @@ public class FireStationControllerTest {
 	
 	//---------- Méthodes de base --------
 
+	@Test
+	public void equalsContract() {
+	    EqualsVerifier.simple().suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT, Warning.ALL_FIELDS_SHOULD_BE_USED)
+	            .forClass(FireStationController.class)
+	            .verify();
+	}
 	
 	@Test
 	public void testDeleteFireStation() throws Exception {

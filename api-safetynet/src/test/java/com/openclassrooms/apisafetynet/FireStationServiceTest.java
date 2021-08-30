@@ -21,6 +21,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import com.openclassrooms.apisafetynet.controller.FireStationController;
 import com.openclassrooms.apisafetynet.exceptions.UnfindablePersonException;
 import com.openclassrooms.apisafetynet.model.FireStation;
 import com.openclassrooms.apisafetynet.model.MedicalRecord;
@@ -34,6 +35,8 @@ import com.openclassrooms.apisafetynet.projection.FireAlert;
 import com.openclassrooms.apisafetynet.projection.People;
 
 import javassist.NotFoundException;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 // ---- ------ !!!!!  Peut thrown une IllegalStateException : failed context loaded parce que wampserver n'a pas été démarré
 
@@ -92,6 +95,13 @@ public class FireStationServiceTest {
 		
 	}
 	// Mockito.anyString() + "_" + Mockito.anyString()
+	
+	@Test
+	public void equalsContract() {
+	    EqualsVerifier.simple().suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT, Warning.ALL_FIELDS_SHOULD_BE_USED)
+	            .forClass(FireStationService.class)
+	            .verify();
+	}
 	
 	@DisplayName("La valeur \"true\" nous est renvoyé lorsque la firestation avec l'id donnée a été supprimée")
 	@Test

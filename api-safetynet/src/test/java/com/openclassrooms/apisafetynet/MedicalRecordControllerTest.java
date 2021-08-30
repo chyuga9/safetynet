@@ -30,6 +30,9 @@ import com.openclassrooms.apisafetynet.controller.MedicalRecordController;
 import com.openclassrooms.apisafetynet.service.FireStationService;
 import com.openclassrooms.apisafetynet.service.MedicalRecordService;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
+
 @WebMvcTest(controllers = MedicalRecordController.class)
 public class MedicalRecordControllerTest {
 
@@ -51,6 +54,13 @@ public class MedicalRecordControllerTest {
 	@BeforeAll
 	static public void setup() {
 		x = (int) (Math.random()*((10-1)+1))+1; // nombre entier au hasard - double x = (int)(Math.random()*((max-min)+1))+min;
+	}
+	
+	@Test
+	public void equalsContract() {
+	    EqualsVerifier.simple().suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT, Warning.ALL_FIELDS_SHOULD_BE_USED)
+	            .forClass(MedicalRecordController.class)
+	            .verify();
 	}
 	
 	//---------- Méthodes de base --------

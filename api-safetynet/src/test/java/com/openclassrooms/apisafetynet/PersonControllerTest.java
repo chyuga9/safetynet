@@ -39,10 +39,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.MediaType;
 
 import com.jayway.jsonpath.JsonPath;
+import com.openclassrooms.apisafetynet.controller.FireStationController;
 import com.openclassrooms.apisafetynet.controller.PersonController;
 import com.openclassrooms.apisafetynet.model.Person;
 import com.openclassrooms.apisafetynet.repository.PersonsRepository;
 import com.openclassrooms.apisafetynet.service.PersonService;
+
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 /*
  * https://howtodoinjava.com/spring-boot2/testing/spring-boot-mockmvc-example/
@@ -69,7 +73,14 @@ public class PersonControllerTest {
 	 static public void setup() {
 		x = (int) (Math.random()*((10-1)+1))+1; // nombre entier au hasard - double x = (int)(Math.random()*((max-min)+1))+min;
 	}
-		
+	
+	@Test
+	public void equalsContract() {
+	    EqualsVerifier.simple().suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT, Warning.ALL_FIELDS_SHOULD_BE_USED)
+	            .forClass(PersonController.class)
+	            .verify();
+	}
+	
 	//---------- Méthodes de base --------
 
 	//Tester si la personne créée en Set up a bien été supprimée

@@ -25,6 +25,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import com.openclassrooms.apisafetynet.controller.FireStationController;
 import com.openclassrooms.apisafetynet.exceptions.UnfindablePersonException;
 import com.openclassrooms.apisafetynet.model.ChildAlertAndFamily;
 import com.openclassrooms.apisafetynet.model.FireStation;
@@ -37,6 +38,8 @@ import com.openclassrooms.apisafetynet.service.MedicalRecordService;
 import com.openclassrooms.apisafetynet.service.PersonService;
 
 import javassist.NotFoundException;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 //---- ------ !!!!!  Peut thrown une IllegalStateException : failed context loaded parce que wampserver n'a pas été démarré
 
@@ -72,6 +75,13 @@ public class MedicalRecordServiceTest {
 		mr = new MedicalRecord("prenom", "nom", "prenom_nom", null, null, null);		
 	}	
 
+	@Test
+	public void equalsContract() {
+	    EqualsVerifier.simple().suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT, Warning.ALL_FIELDS_SHOULD_BE_USED)
+	            .forClass(MedicalRecordService.class)
+	            .verify();
+	}
+	
 	@DisplayName("La valeur \"true\" nous est renvoyé lorsque le medical record avec l'idDb donné a été supprimé")
 	@Test
 	public void givenAnIdDb_whenWeDeleteAPersonWithThisIdDb_thenHeIsDeletedFromTheDatabase() throws NotFoundException {

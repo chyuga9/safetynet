@@ -29,6 +29,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.PropertySource;
 
+import com.openclassrooms.apisafetynet.controller.FireStationController;
 import com.openclassrooms.apisafetynet.exceptions.UnfindablePersonException;
 import com.openclassrooms.apisafetynet.model.ChildAlertAndFamily;
 import com.openclassrooms.apisafetynet.model.FireStation;
@@ -40,6 +41,9 @@ import com.openclassrooms.apisafetynet.projection.PhoneAlert;
 import com.openclassrooms.apisafetynet.repository.FireStationsRepository;
 import com.openclassrooms.apisafetynet.repository.PersonsRepository;
 import com.openclassrooms.apisafetynet.service.PersonService;
+
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 //---- ------ !!!!!  Peut thrown une IllegalStateException : failed context loaded parce que wampserver n'a pas été démarré
 // --- https://www.toptal.com/java/a-guide-to-everyday-mockito
@@ -93,6 +97,13 @@ public class PersonServiceTest {
 		
 	}
 	// Mockito.anyString() + "_" + Mockito.anyString()
+	
+	@Test
+	public void equalsContract() {
+	    EqualsVerifier.simple().suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT, Warning.ALL_FIELDS_SHOULD_BE_USED)
+	            .forClass(PersonService.class)
+	            .verify();
+	}
 	
 	@DisplayName("La valeur \"true\" nous est renvoyé lorsque la personne avec l'idDb donnée a été supprimée")
 	@Test
